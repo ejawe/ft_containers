@@ -1,12 +1,14 @@
-#ifndef VECTOR_HPP
-# define VECTOR_HPP
+#ifndef VECTOR_CLASS_HPP
+# define VECTOR_CLASS_HPP
 
 #include <iostream>
 
-namespace ft {
+namespace ft 
+{
 
-template <typename T, typename Alloc = std::allocator<T>>
-class vector {
+template < typename T, typename Alloc = std::allocator<T> >
+class vector 
+{
 
 public:
 
@@ -26,15 +28,25 @@ public:
 
 	// ******** Member function ********
 
+	// *** Constructors ***
 	explicit vector (const allocator_type& alloc = allocator_type());
-
-
-	// explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
+	explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
 	// template <class InputIterator>
     // vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
 	// vector (const vector& x);
 
+	// *** Destructors ***
+	virtual ~vector();
 
+private:
+	value_type		*_data;
+	allocator_type	_alloc;
+	size_type		_size;
+	size_type		_capacity;
+
+	void			create_data(size_type size, const value_type &val = value_type());
+	void			destroy_data();
+	
 }; //-------------------end Vector Class 
 
 
