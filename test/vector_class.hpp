@@ -2,6 +2,7 @@
 # define VECTOR_CLASS_HPP
 
 #include <iostream>
+#include "enable_if.hpp"
 
 namespace ft 
 {
@@ -20,10 +21,10 @@ public:
 	typedef typename allocator_type::const_reference	const_reference;
 	typedef typename allocator_type::pointer			pointer;
 	typedef typename allocator_type::const_pointer		const_pointer;
-	//typedef typename ft::Iterator<T>					iterator;
-	//typedef typename ft::const_iterator<T>				const_iterator;
-	//typedef typename ft::reverse_iterator<T>			reverse_iterator;
-	//typedef typename ft::const_reverse_iterator<T>		const_reverse_iterator;
+	typedef typename ft::Iterator<T>					iterator;
+	typedef typename ft::Const_iterator<T>				const_iterator;
+	typedef typename ft::reverse_iterator<T>			reverse_iterator;
+	typedef typename ft::const_reverse_iterator<T>		const_reverse_iterator;
 	typedef 		 std::ptrdiff_t 					difference_type;
 	typedef			 size_t								size_type; 
 
@@ -39,6 +40,10 @@ public:
 	// *** Destructors ***
 	virtual ~vector();
 
+	// *** Iterator ***
+	iterator begin();
+	iterator end();
+
 	// *** Capacity ***
 	size_type 	size() const;
 	size_type 	max_size() const;
@@ -52,6 +57,20 @@ public:
 	const_reference operator[] (size_type n) const;
 	reference at(size_type n);
 	const_reference at(size_type n) const;
+	reference front();
+	const_reference front() const;
+	reference back();
+	const_reference back() const;
+
+	// *** Modifiers ***
+	template <class InputIterator>
+	void assign(InputIterator first, InputIterator last,
+	typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL);
+	void assign (size_type n, const value_type& val);
+	void push_back (const value_type& val);
+	void pop_back();
+	iterator insert (iterator position, const value_type& val);
+	void insert (iterator position, size_type n, const value_type& val);
 
 private:
 	value_type		*_data;

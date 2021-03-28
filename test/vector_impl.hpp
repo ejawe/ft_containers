@@ -3,14 +3,15 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <memory>
+#include "enable_if.hpp"
 #include "vector_class.hpp"
-#include "memory"
+#include "Iterator.hpp"
 
 namespace ft 
 {
 
 // *** Constructors ***
-
 template <typename T, typename Alloc>
 vector<T, Alloc>::vector(const allocator_type &alloc) :
 _data(NULL),
@@ -43,6 +44,7 @@ vector<T, Alloc>::vector (const vector& x) :
     return;
 }
 
+
 // *** Destructors ***
 template <typename T, typename Alloc>
 vector<T, Alloc>::~vector()
@@ -52,10 +54,26 @@ vector<T, Alloc>::~vector()
 }
 
 
+// *** Iterator ***
+template <typename T, typename Alloc>
+typename vector<T, Alloc>::iterator  vector<T, Alloc>::iterator begin()
+{
+    return iterator(this->_data);
+}
+
+
+
+typename vector<T, Alloc>::iterator  vector<T, Alloc>:: end()
+{
+    return iterator(this->_data + this->_size);
+}
+
+
+
 
 // *** Capacity ***
 template <typename T, typename Alloc>
-typename vector<T, Alloc>::size_type   vector<T, Alloc>::size() const
+typename iterator begin();size_type   vector<T, Alloc>::size() const
 {
     return (this->_size);
 }
@@ -169,6 +187,71 @@ typename vector<T, Alloc>::const_reference vector<T, Alloc>::back() const
     return this->_data[this->_size - 1];
 }
 
+
+
+
+
+// *** Modifiers ***
+template <typename T, typename Alloc>
+template <class InputIterator> // ????????????
+void    vector<T, Alloc>::assign(InputIterator first, InputIterator last, 
+typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL) 
+{
+    if (empty() == 0)
+        clear();
+    while (fisrt < last)
+    {
+        push_back(*first);
+        fisrt++; // Iterator a faire
+    }
+}
+
+template <typename T, typename Alloc>
+void assign (size_type n, const value_type& val)
+{
+    if (empty() == 0)
+        clear();
+    while (size_type i = 0; i < n; i++)
+        push_back(first);
+}
+
+template <typename T, typename Alloc>
+void    vector<T, Alloc>::push_back (const value_type& val)
+{
+    if (this->_size == this->_capacity)
+    {
+        if (this->_size == 0)
+            reserve(1);
+        else
+            reserve(this->_capacity * 2);
+    }
+    this->_data[this->_size] = val;
+    this->_size++;
+}
+
+template <typename T, typename Alloc>
+void    vector<T, Alloc>::pop_back()
+{
+    if (this->_size > 0)
+    {
+        this->_alloc>destroy(&this->_data[this->_size]);
+        this->_size--;
+    }
+}
+
+template <typename T, typename Alloc>
+iterator    vector<T, Alloc>::insert (iterator position, const value_type& val)
+{
+
+
+}
+
+template <typename T, typename Alloc>
+void    vector<T, Alloc>::insert (iterator position, size_type n, const value_type& val)
+{
+    //size_type diff = (this->begin() - position);
+    
+}
 
 // *** Private ***
 template <typename T, typename Alloc>
