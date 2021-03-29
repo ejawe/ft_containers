@@ -12,3 +12,7 @@ http://www.cplusplus.com/reference/stl/
 https://stdcxx.apache.org/doc/stdlibref/2-7.html
 
 https://fr.wikipedia.org/wiki/Standard_Template_Library
+
+
+- traits enable_if
+https://stackoverflow.com/questions/25284499/how-does-stdenable-if-work

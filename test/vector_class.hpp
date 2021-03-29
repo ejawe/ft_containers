@@ -36,6 +36,7 @@ public:
 	template <class InputIterator>
     vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
 	vector (const vector& x);
+	vector& operator= (const vector& x);
 
 	// *** Destructors ***
 	virtual ~vector();
@@ -53,33 +54,34 @@ public:
 	void 		reserve (size_type n);
 
 	// *** Element acces ***
-    reference operator[] (size_type n);
+    reference 		operator[] (size_type n);
 	const_reference operator[] (size_type n) const;
-	reference at(size_type n);
+	reference 		at(size_type n);
 	const_reference at(size_type n) const;
-	reference front();
+	reference 		front();
 	const_reference front() const;
-	reference back();
+	reference 		back();
 	const_reference back() const;
 
 	// *** Modifiers ***
 	template <class InputIterator>
-	void assign(InputIterator first, InputIterator last,
-	typename ft::enable_if<InputIterator::is_iterator, InputIterator>::type = NULL);
-	void assign (size_type n, const value_type& val);
-	void push_back (const value_type& val);
-	void pop_back();
-	iterator insert (iterator position, const value_type& val);
-	void insert (iterator position, size_type n, const value_type& val);
-
+	void 		assign(InputIterator first, InputIterator last, typename ft::enable_if<std::numeric_limits<InputIterator>::is_integer, InputIterator>::type = NULL);
+	void 		assign(size_type n, const value_type& val);
+	void 		push_back (const value_type& val);
+	void 		pop_back();
+	iterator 	insert(iterator position, const value_type& val);
+	void 		insert(iterator position, size_type n, const value_type& val);
+	template <class InputIterator>
+    void 		insert(iterator position, InputIterator first, InputIterator last, typename ft::enable_if<std::numeric_limits<InputIterator>::is_integer, InputIterator>::type = NULL);
+	iterator 	erase(iterator position);
+	iterator 	erase(iterator first, iterator last);
+	void		swap (vector& x);
+	void		clear();
 private:
 	value_type		*_data;
 	allocator_type	_alloc;
 	size_type		_size;
 	size_type		_capacity;
-
-	void			create_data(size_type size, const value_type &val = value_type());
-	void			destroy_data();
 	
 }; //-------------------end Vector Class 
 
