@@ -16,3 +16,13 @@ https://fr.wikipedia.org/wiki/Standard_Template_Library
 
 - traits enable_if
 https://stackoverflow.com/questions/25284499/how-does-stdenable-if-work
+
+
+- lvalue  and rvalue
+https://docs.microsoft.com/fr-fr/cpp/cpp/lvalues-and-rvalues-visual-cpp?view=msvc-160
+
+- Iterator operators
+stl_iterator.h
+https://docs.microsoft.com/en-us/cpp/standard-library/iterator-operators?view=msvc-160
+
+
