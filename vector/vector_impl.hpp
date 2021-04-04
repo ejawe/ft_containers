@@ -1,7 +1,7 @@
 #ifndef VECTOR_IMPL_HPP
 # define VECTOR_IMPL_HPP
 
-#include "utils.hpp"
+#include "../utils.hpp"
 #include "vector_class.hpp"
 
 namespace ft 
@@ -305,11 +305,12 @@ void    vector<T, Alloc>::insert(iterator position, size_type n, const value_typ
     }
     if (_size)
     {
+        ft::vector<T> newvec(begin(), end());
         size_type i = pos + n;
-        size_type j = 0;
+        size_type j = 0 + pos;
         while (i < _size + n)
         {
-            _alloc.construct(&_data[i], _data[pos + j]);
+            _alloc.construct(&_data[i], newvec._data[j]);
             j++;
             i++;
         }
@@ -346,11 +347,12 @@ void 	 vector<T, Alloc>::insert(iterator position, InputIterator first, typename
     }
     if (_size)
     {
+        ft::vector<T> newvec(begin(), end());
         size_type i = pos + n;
-        size_type j = 0;
+        size_type j = 0 + pos;
         while (i < _size + n)
         {
-            _alloc.construct(&_data[i], _data[pos + j]);
+            _alloc.construct(&_data[i], newvec._data[j]);
             j++;
             i++;
         }
@@ -381,8 +383,7 @@ template <typename T, typename Alloc>
 typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator first, iterator last)
 {
     iterator it;
-    size_type n = first - last;
-
+    size_type n = last - first;
     for (it = first; it != last; ++it) 
     {
         _alloc.destroy(&*it);

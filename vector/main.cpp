@@ -397,9 +397,343 @@ int main()
     std::cout << "************* test assign *************" << std::endl;
     std::cout << "***************************************" << std::endl << std::endl;
     
+    std::cout << "std :" << std::endl;
+    std::vector<int> first;
+    std::vector<int> second;
+
+    first.assign (7,100);             // 7 ints with a value of 100
+
+    std::vector<int>::iterator it;
+    it=first.begin()+1;
+
+    second.assign (it,first.end()-1); // the 5 central values of first
+
+    std::cout << "Size of first: " << int (first.size()) << '\n';
+    std::cout << "Size of second: " << int (second.size()) << '\n';
 
 
+    std::cout << "-----------------------------" << std::endl;
+    std::cout << "ft :" << std::endl;
 
 
+    ft::vector<int> first1;
+    ft::vector<int> second2;
+
+    first1.assign (7,100);             // 7 ints with a value of 100
+
+    ft::vector<int>::iterator it2;
+    it2=first1.begin()+1;
+
+    second2.assign (it2,first1.end()-1); // the 5 central values of first
+
+    std::cout << "Size of first: " << int (first1.size()) << '\n';
+    std::cout << "Size of second: " << int (second2.size()) << '\n';
+
+    std::cout << std::endl;
+    std::cout << "***************************************" << std::endl;
+    std::cout << "************ test push_back ***********" << std::endl;
+    std::cout << "***************************************" << std::endl << std::endl;
+
+     std::cout << "std :" << std::endl;
+    std::vector<int> myvector8;
+
+    myvector8.push_back(78);
+    myvector8.push_back(16);
+
+    std::cout << "myvector8 stores " << myvector8.size() << " numbers.\n";
+
+    std::cout << "-----------------------------" << std::endl;
+    std::cout << "ft :" << std::endl;
+    std::vector<int> myvector9;
+
+    myvector9.push_back(78);
+    myvector9.push_back(16);
+
+    std::cout << "myvector9 stores " << myvector9.size() << " numbers.\n";
+
+    std::cout << std::endl;
+    std::cout << "***************************************" << std::endl;
+    std::cout << "************ test pop_back ************" << std::endl;
+    std::cout << "***************************************" << std::endl << std::endl;
+
+     std::cout << "std :" << std::endl;
+    myvector.clear();
+    sum = 0;
+    myvector.push_back (100);
+    myvector.push_back (200);
+    myvector.push_back (300);
+
+    while (!myvector.empty())
+    {
+        sum+=myvector.back();
+        myvector.pop_back();
+    }
+
+    std::cout << "The elements of myvector add up to " << sum << '\n';
+
+    std::cout << "-----------------------------" << std::endl;
+    std::cout << "ft :" << std::endl;
+
+    myvector2.clear();
+    sum = 0;
+    myvector2.push_back (100);
+    myvector2.push_back (200);
+    myvector2.push_back (300);
+
+    while (!myvector2.empty())
+    {
+        sum+=myvector2.back();
+        myvector2.pop_back();
+    }
+
+    std::cout << "The elements of myvector2 add up to " << sum << '\n';
+
+    std::cout << std::endl;
+    std::cout << "***************************************" << std::endl;
+    std::cout << "************* test insert *************" << std::endl;
+    std::cout << "***************************************" << std::endl << std::endl;
+
+    std::cout << "std :" << std::endl;
+
+    std::vector<int> nvec (3,100);
+    std::vector<int>::iterator it7;
+
+    it7 = nvec.begin();
+    it7 = nvec.insert ( it7 , 200 );
+
+    nvec.insert (it7,2,300);
+
+    // "it7" no longer valid, get a new one:
+    it7 = nvec.begin();
+
+    std::vector<int> anothervector (2,400);
+    nvec.insert (it7+2,anothervector.begin(),anothervector.end());
+
+    int myarray [] = { 501,502,503 };
+    nvec.insert (nvec.begin(), myarray, myarray+3);
+
+    std::cout << "nvec contains:";
+    for (it7=nvec.begin(); it7<nvec.end(); it7++)
+        std::cout << ' ' << *it7;
+    std::cout << '\n';
+
+
+    std::cout << "-----------------------------" << std::endl;
+    std::cout << "ft :" << std::endl;
+
+    ft::vector<int> nvec1 (3,100);
+    ft::vector<int>::iterator it6;
+
+    it6 = nvec1.begin();
+    it6 = nvec1.insert( it6 , 200 );
+
+    nvec1.insert (it6,2,300);
+
+    // "it6" no longer valid, get a new one:
+    it6 = nvec1.begin();
+
+    ft::vector<int> anothervector1 (2,400);
+    nvec1.insert (it6+2,anothervector1.begin(),anothervector1.end());
+
+    int myarray1 [] = { 501,502,503 };
+    nvec1.insert (nvec1.begin(), myarray1, myarray1+3);
+
+    std::cout << "nvec contains:";
+    for (it6=nvec1.begin(); it6<nvec1.end(); it6++)
+        std::cout << ' ' << *it6;
+    std::cout << '\n';
+
+    std::cout << std::endl;
+    std::cout << "***************************************" << std::endl;
+    std::cout << "************* test erase **************" << std::endl;
+    std::cout << "***************************************" << std::endl << std::endl;
+
+    std::cout << "std :" << std::endl;
+    std::vector<int> nvec2;
+
+    // set some values (from 1 to 10)
+    for (int i=1; i<=10; i++) nvec2.push_back(i);
+
+    // erase the 6th element
+    nvec2.erase (nvec2.begin()+5);
+
+    // erase the first 3 elements:
+    nvec2.erase (nvec2.begin(),nvec2.begin()+3);
+
+    std::cout << "nvec2 contains:";
+    for (unsigned i=0; i<nvec2.size(); ++i)
+        std::cout << ' ' << nvec2[i];
+    std::cout << '\n';
+
+    std::cout << "-----------------------------" << std::endl;
+    std::cout << "ft :" << std::endl;
+
+    ft::vector<int> nvec3;
+
+    // set some values (from 1 to 10)
+    for (int i=1; i<=10; i++) nvec3.push_back(i);
+
+    // erase the 6th element
+    nvec3.erase (nvec3.begin()+5);
+
+    // erase the first 3 elements:
+    nvec3.erase (nvec3.begin(),nvec3.begin()+3);
+
+    std::cout << "nvec3 contains:";
+    for (unsigned i=0; i<nvec3.size(); ++i)
+        std::cout << ' ' << nvec3[i];
+    std::cout << '\n';
+
+    std::cout << std::endl;
+    std::cout << "***************************************" << std::endl;
+    std::cout << "************* test swap ***************" << std::endl;
+    std::cout << "***************************************" << std::endl << std::endl;
+
+    std::cout << "std :" << std::endl;
+    std::vector<int> foo3 (3,100);   // three ints with a value of 100
+    std::vector<int> bar3 (5,200);   // five ints with a value of 200
+
+    foo3.swap(bar3);
+
+    std::cout << "foo contains:";
+    for (unsigned i=0; i<foo3.size(); i++)
+        std::cout << ' ' << foo3[i];
+    std::cout << '\n';
+
+    std::cout << "bar contains:";
+    for (unsigned i=0; i<bar3.size(); i++)
+        std::cout << ' ' << bar3[i];
+    std::cout << '\n';
+
+    std::cout << "-----------------------------" << std::endl;
+    std::cout << "ft :" << std::endl;
+
+    ft::vector<int> foo4 (3,100);   // three ints with a value of 100
+    ft::vector<int> bar4 (5,200);   // five ints with a value of 200
+
+    foo4.swap(bar4);
+
+    std::cout << "foo contains:";
+    for (unsigned i=0; i<foo4.size(); i++)
+        std::cout << ' ' << foo4[i];
+    std::cout << '\n';
+
+    std::cout << "bar contains:";
+    for (unsigned i=0; i<bar4.size(); i++)
+        std::cout << ' ' << bar4[i];
+    std::cout << '\n';
+
+    std::cout << std::endl;
+    std::cout << "***************************************" << std::endl;
+    std::cout << "************* test clear **************" << std::endl;
+    std::cout << "***************************************" << std::endl << std::endl;
+
+    std::cout << "std :" << std::endl;
+    std::vector<int> nvec4;
+    nvec4.push_back (100);
+    nvec4.push_back (200);
+    nvec4.push_back (300);
+
+    std::cout << "nvec4 contains:";
+    for (unsigned i=0; i<nvec4.size(); i++)
+        std::cout << ' ' << nvec4[i];
+    std::cout << '\n';
+
+    nvec4.clear();
+    nvec4.push_back (1101);
+    nvec4.push_back (2202);
+
+    std::cout << "nvec4 contains:";
+    for (unsigned i=0; i<nvec4.size(); i++)
+        std::cout << ' ' << nvec4[i];
+    std::cout << '\n';
+
+    std::cout << "-----------------------------" << std::endl;
+    std::cout << "ft :" << std::endl;
+
+    ft::vector<int> nvec5;
+    nvec5.push_back (100);
+    nvec5.push_back (200);
+    nvec5.push_back (300);
+
+    std::cout << "nvec5 contains:";
+    for (unsigned i=0; i<nvec5.size(); i++)
+        std::cout << ' ' << nvec5[i];
+    std::cout << '\n';
+
+    nvec5.clear();
+    nvec5.push_back (1101);
+    nvec5.push_back (2202);
+
+    std::cout << "nvec5 contains:";
+    for (unsigned i=0; i<nvec5.size(); i++)
+        std::cout << ' ' << nvec5[i];
+    std::cout << '\n';
+
+    std::cout << std::endl;
+    std::cout << "***************************************" << std::endl;
+    std::cout << "******** relational operators *********" << std::endl;
+    std::cout << "***************************************" << std::endl << std::endl;
+
+    std::cout << "std :" << std::endl;
+    std::vector<int> foo5 (3,100);   // three ints with a value of 100
+    std::vector<int> bar5 (2,200);   // two ints with a value of 200
+
+    if (foo5==bar5) std::cout << "foo and bar are equal\n";
+    if (foo5!=bar5) std::cout << "foo and bar are not equal\n";
+    if (foo5< bar5) std::cout << "foo is less than bar\n";
+    if (foo5> bar5) std::cout << "foo is greater than bar\n";
+    if (foo5<=bar5) std::cout << "foo is less than or equal to bar\n";
+    if (foo5>=bar5) std::cout << "foo is greater than or equal to bar\n";
+
+    std::cout << "-----------------------------" << std::endl;
+    std::cout << "ft :" << std::endl;
+    ft::vector<int> foo6 (3,100);   // three ints with a value of 100
+    ft::vector<int> bar6 (2,200);   // two ints with a value of 200
+
+    if (foo6==bar6) std::cout << "foo and bar are equal\n";
+    if (foo6!=bar6) std::cout << "foo and bar are not equal\n";
+    if (foo6< bar6) std::cout << "foo is less than bar\n";
+    if (foo6> bar6) std::cout << "foo is greater than bar\n";
+    if (foo6<=bar6) std::cout << "foo is less than or equal to bar\n";
+    if (foo6>=bar6) std::cout << "foo is greater than or equal to bar\n";
+
+    std::cout << std::endl;
+    std::cout << "***************************************" << std::endl;
+    std::cout << "*********** swap no member ************" << std::endl;
+    std::cout << "***************************************" << std::endl << std::endl;
+
+    std::cout << "std :" << std::endl;
+    std::vector<int> foo7 (3,100);   // three ints with a value of 100
+    std::vector<int> bar7 (5,200);   // five ints with a value of 200
+
+    foo7.swap(bar7);
+
+    std::cout << "foo contains:";
+    for (std::vector<int>::iterator it = foo7.begin(); it!=foo7.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+
+    std::cout << "bar contains:";
+    for (std::vector<int>::iterator it = bar7.begin(); it!=bar7.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+
+    std::cout << "-----------------------------" << std::endl;
+    std::cout << "ft :" << std::endl;
+    ft::vector<int> foo8 (3,100);   // three ints with a value of 100
+    ft::vector<int> bar8 (5,200);   // five ints with a value of 200
+
+    foo8.swap(bar8);
+
+    std::cout << "foo contains:";
+    for (ft::vector<int>::iterator it = foo8.begin(); it!=foo8.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+
+    std::cout << "bar contains:";
+    for (ft::vector<int>::iterator it = bar8.begin(); it!=bar8.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
     return 0;
 }
