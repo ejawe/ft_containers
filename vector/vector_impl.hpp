@@ -4,7 +4,7 @@
 #include "../utils.hpp"
 #include "vector_class.hpp"
 
-namespace ft 
+namespace ft
 {
 
 // *** Constructors ***

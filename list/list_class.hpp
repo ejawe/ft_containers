@@ -45,7 +45,6 @@ public:
 	// ******** Member function ********
 
 	// *** Constructors ***
-
 	explicit list (const allocator_type& alloc = allocator_type());
 	explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
 	template <class InputIterator>
@@ -57,10 +56,50 @@ public:
 	// *** Destructors ***
 	virtual ~list();
 
+	// *** Iterator ***
+	iterator begin();
+	const_iterator begin() const;
+	iterator end();
+	const_iterator end() const;
+	reverse_iterator rbegin();
+	const_reverse_iterator rbegin() const;
+	reverse_iterator rend();
+	const_reverse_iterator rend() const;
+
+	// *** Capacity ***
+	bool empty() const;
+	size_type size() const;
+	size_type max_size() const;
+
+	// *** Element acces ***
+	reference front();
+	const_reference front() const;
+	reference back();
+	const_reference back() const;
+
+	// *** Modifiers ***
+	template <class InputIterator>
+	void assign (typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first, InputIterator last);	
+	void assign (size_type n, const value_type& val);
+	void push_front (const value_type& val);
+	void pop_front();
+	void push_back (const value_type& val);
+	void pop_back();	
+	iterator insert (iterator position, const value_type& val);
+	void insert (iterator position, size_type n, const value_type& val);	
+	template <class InputIterator>
+	void insert (iterator position, typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first, InputIterator last);
+
+
+
+
+
+
 private:
 	allocator_type	_alloc;
 	size_type		_size;
 	Node<T>			*_node;
+	// prev : dernier node, next : premier node
 
 }; //-------------------end List Class 
 
