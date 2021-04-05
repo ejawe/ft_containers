@@ -71,7 +71,6 @@ list<T, Alloc>& list<T, Alloc>::operator= (const list& x)
 }
 
 
-
 // *** Destructors ***
 template <typename T, typename Alloc>
 list<T, Alloc>::~list()
@@ -185,8 +184,6 @@ void list<T, Alloc>::assign(size_type n, const value_type& val)
         push_back(val);
 }
 
-
-
 template <typename T, typename Alloc>
 void list<T, Alloc>::push_front (const value_type& val)
 {
@@ -202,7 +199,7 @@ void list<T, Alloc>::push_front (const value_type& val)
 template <typename T, typename Alloc>
 void list<T, Alloc>::pop_front()
 {
-	Node<T>		*tmp = _node->next;
+	Node<T> *tmp = _node->next;
 	
 	_node->next = _node->next->next;
 	delete tmp;
@@ -213,7 +210,7 @@ template <typename T, typename Alloc>
 void list<T, Alloc>::push_back (const value_type& val)
 {
 
-	Node<T>		*newnode = new Node<T>;
+	Node<T> *newnode = new Node<T>;
 
 	newnode->next = _node;
 	newnode->prev = _node->prev;
@@ -227,11 +224,10 @@ void list<T, Alloc>::push_back (const value_type& val)
 template <typename T, typename Alloc>
 void list<T, Alloc>::pop_back()
 {
-	Node<T>		*tmp = _node->prev;
+	Node<T> *tmp = _node->prev;
 
 	_node->prev->prev->next = _node;
 	_node->prev = _node->prev->prev;
-
 	delete tmp;
 	_size--;
 }
@@ -240,8 +236,8 @@ void list<T, Alloc>::pop_back()
 template <typename T, typename Alloc>
 typename list<T, Alloc>::iterator list<T, Alloc>::insert (iterator position, const value_type& val)
 {
-	Node<T>		*newnode = new Node<T>;
-	Node<T>		*element = position.operator->();
+	Node<T> *newnode = new Node<T>;
+	Node<T> *element = position.operator->();
 
 	newnode->val = val;
 	newnode->next = element->prev->next;
@@ -256,11 +252,186 @@ typename list<T, Alloc>::iterator list<T, Alloc>::insert (iterator position, con
 
 // fill
 template <typename T, typename Alloc>
-void insert (iterator position, size_type n, const value_type& val);
+void list<T, Alloc>::insert (iterator position, size_type n, const value_type& val)
+{
+	while (n--)
+		position = insert(position, val);
+}
 
 // range	
 template <typename T, typename Alloc> template <class InputIterator>
-void insert (iterator position, InputIterator first, InputIterator last);
+void list<T, Alloc>::insert (iterator position, typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first, InputIterator last)
+{
+	while (first != last)
+	{
+		position = insert(position, *(first++));
+		if (position != end())
+			position++;
+	}
+}
+
+template <typename T, typename Alloc>
+typename list<T, Alloc>::iterator list<T, Alloc>::erase (iterator position)
+{
+	Node<T> *element = position.operator->();
+
+	element->prev->next = element->next;
+	element->next->prev = element->prev;
+	delete element;
+	_size--;
+	return (position);
+}
+
+template <typename T, typename Alloc>
+typename list<T, Alloc>::iterator list<T, Alloc>::erase (iterator first, iterator last)
+{
+	while (first != last)
+		erase(first++);
+	return (first);
+}
+
+template <typename T, typename Alloc>
+void list<T, Alloc>::swap (list& x)
+{
+	Node<T> *tmpnode = _node;
+	size_type tmpsize = _size;
+
+	_node = x._node;
+	x._node = tmpnode;
+	_size = x._size;
+	x._size = tmpsize;
+}
+
+template <typename T, typename Alloc>
+void list<T, Alloc>::resize (size_type n, value_type val = value_type())
+{
+	if (n < size())
+	{
+		iterator it = begin();
+		for (size_t i = 0; i < n; i++)
+			++it;
+		erase(it, end());
+	}
+	else if (n > size())
+		insert(end(), n - size(), val);
+}
+
+template <typename T, typename Alloc>
+void list<T, Alloc>::clear()
+{
+	erase(begin(), end());
+}
+
+
+
+//---------------------------------------------------------------------------------------
+
+
+
+// *** Operations ***
+// entire list
+template <typename T, typename Alloc>
+void list<T, Alloc>::splice (iterator position, list& x)
+{
+	splice(position, x, x.begin(), x.end());
+}
+
+
+// single element
+template <typename T, typename Alloc>
+void list<T, Alloc>::splice (iterator position, list& x, iterator i)
+{
+	insert(position, *i);
+	x.erase(i);
+}
+
+
+// element range
+template <typename T, typename Alloc>
+void list<T, Alloc>::splice (iterator position, list& x, iterator first, iterator last)
+{
+	insert(position, first, last);
+	x.erase(first, last);
+}
+
+template <typename T, typename Alloc>
+void list<T, Alloc>::remove (const value_type& val)
+{
+	iterator it = begin();
+	while (it != end())
+	{
+		if (*it == value)
+			it = erase(it);
+		else
+			it++;
+	}	
+}
+
+template <typename T, typename Alloc> template <class Predicate>
+void list<T, Alloc>::remove_if (Predicate pred)
+{
+	iterator it = begin();
+	while (it != end())
+	{
+		if (pred(*it))
+			it = erase(it);
+		else
+			it++;
+	}
+}
+
+template <typename T, typename Alloc> 
+void list<T, Alloc>::unique()
+{
+	iterator	prev = begin();
+	iterator	next = ++begin();
+	while (next != end())
+	{
+		if (*prev == *next)
+		{
+			erase(prev);
+		}
+		prev = next;
+		++next;
+	}
+}
+
+
+template <typename T, typename Alloc> template <class BinaryPredicate>
+void list<T, Alloc>::unique (BinaryPredicate binary_pred)
+{
+	iterator	prev = begin();
+	iterator	next = ++begin();
+	while (next != end())
+	{
+		if (binary_pred(*next, *prev) == 1)
+		{
+			erase(next);
+			prev = begin();
+			next = ++begin();
+		}
+		else
+		{
+			prev = next;
+			++next;
+		}
+	}
+}
+
+// template <typename T, typename Alloc>
+// void list<T, Alloc>::merge (list& x)
+// {
+
+// }
+	
+// template <typename T, typename Alloc> template <class Compare>
+// void list<T, Alloc>::merge (list& x, Compare comp);
+
+
+
+
+
+
 
 
 
