@@ -51,8 +51,9 @@ _alloc(alloc)
 // copy
 template <typename T, typename Alloc>
 list<T, Alloc>::list(const list& x) :
-_alloc(x._alloc),
-_size(x._size)
+_size(x._size),
+_alloc(x._alloc)
+
 {
 	_node = new Node<T>;
 	_node->prev = _node;
@@ -65,7 +66,7 @@ template <typename T, typename Alloc>
 list<T, Alloc>& list<T, Alloc>::operator= (const list& x)
 {
 	clear();
-	for (iterator it = x.begin(); it != x.end(); it++)
+	for (const_iterator it = x.begin(); it != x.end(); it++)
 		push_back(*it);
 	return (*this);
 }
@@ -75,8 +76,15 @@ list<T, Alloc>& list<T, Alloc>::operator= (const list& x)
 template <typename T, typename Alloc>
 list<T, Alloc>::~list()
 {
-	clear();
+	size_type i = 0;
+	while(i < _size)
+	{
+		pop_back();
+		i++;
+	}
+	// clear();
 	delete _node;
+	
 }
 
 // *** Iterator ***
@@ -98,21 +106,21 @@ typename list<T, Alloc>::const_iterator list<T, Alloc>::end() const
 
 template <typename T, typename Alloc>
 typename list<T, Alloc>::reverse_iterator list<T, Alloc>::rbegin()
-{ return reverse_iterator(_node); }
+{ return reverse_iterator(_node->prev); }
 
 
 template <typename T, typename Alloc>
 typename list<T, Alloc>::const_reverse_iterator list<T, Alloc>::rbegin() const
-{ return const_reverse_iterator(_node); }
+{ return const_reverse_iterator(_node->prev); }
 
 template <typename T, typename Alloc>
 typename list<T, Alloc>::reverse_iterator list<T, Alloc>::rend()
-{ return reverse_iterator(begin()); } // a verifier
+{ return reverse_iterator(_node); } // a verifier
 
 
 template <typename T, typename Alloc>
 typename list<T, Alloc>::const_reverse_iterator list<T, Alloc>::rend() const
-{ return const_reverse_iterator(begin()); } // a verifier
+{ return const_reverse_iterator(_node); } // a verifier
 
 
 //---------------------------------------------------------------------------------------
@@ -187,6 +195,8 @@ void list<T, Alloc>::assign(size_type n, const value_type& val)
 template <typename T, typename Alloc>
 void list<T, Alloc>::push_front (const value_type& val)
 {
+	Node<T>	*newnode = new Node<T>;
+
 	newnode->next = _node->next;
 	newnode->prev = _node;
 	newnode->val = val;
@@ -214,7 +224,7 @@ void list<T, Alloc>::push_back (const value_type& val)
 
 	newnode->next = _node;
 	newnode->prev = _node->prev;
-	new_node->val = val;
+	newnode->val = val;
 
 	_node->prev->next = newnode;
 	_node->prev = newnode;
@@ -274,7 +284,6 @@ template <typename T, typename Alloc>
 typename list<T, Alloc>::iterator list<T, Alloc>::erase (iterator position)
 {
 	Node<T> *element = position.operator->();
-
 	element->prev->next = element->next;
 	element->next->prev = element->prev;
 	delete element;
@@ -285,9 +294,14 @@ typename list<T, Alloc>::iterator list<T, Alloc>::erase (iterator position)
 template <typename T, typename Alloc>
 typename list<T, Alloc>::iterator list<T, Alloc>::erase (iterator first, iterator last)
 {
+	iterator it = first;
 	while (first != last)
-		erase(first++);
-	return (first);
+	{
+		it = erase(first);
+		first++;
+	}
+		
+	return (it);
 }
 
 template <typename T, typename Alloc>
@@ -303,7 +317,7 @@ void list<T, Alloc>::swap (list& x)
 }
 
 template <typename T, typename Alloc>
-void list<T, Alloc>::resize (size_type n, value_type val = value_type())
+void list<T, Alloc>::resize (size_type n, value_type val)
 {
 	if (n < size())
 	{
@@ -360,7 +374,7 @@ void list<T, Alloc>::remove (const value_type& val)
 	iterator it = begin();
 	while (it != end())
 	{
-		if (*it == value)
+		if (*it == val)
 			it = erase(it);
 		else
 			it++;
@@ -418,21 +432,130 @@ void list<T, Alloc>::unique (BinaryPredicate binary_pred)
 	}
 }
 
-// template <typename T, typename Alloc>
-// void list<T, Alloc>::merge (list& x)
-// {
-
-// }
+template <typename T, typename Alloc>
+void list<T, Alloc>::merge (list& x)
+{
+	if (&x == this)
+		return;
+	merge(x, _less<value_type>());
+}
 	
-// template <typename T, typename Alloc> template <class Compare>
-// void list<T, Alloc>::merge (list& x, Compare comp);
+template <typename T, typename Alloc> template <class Compare>
+void list<T, Alloc>::merge (list& x, Compare comp)
+{
+	if (&x == this)
+		return;
+	insert(end(), x.begin(), x.end());
+	x.clear();
+	sort(comp);
+}
+
+template <typename T, typename Alloc>
+void list<T, Alloc>::sort()
+{
+	sort(_less<value_type>());
+}
+
+template <typename T, typename Alloc> template <class Compare>
+void list<T, Alloc>::sort (Compare comp)
+{
+	iterator prev = begin();
+	iterator next;
+	while (prev + 1 != end())
+	{
+		next = prev + 1;
+		while (next != end())
+		{
+			if (comp(*prev, *next))
+				swap(*prev, *next);
+			next++;
+		}
+		prev++;
+	}
+}
+
+template <typename T, typename Alloc>
+void list<T, Alloc>::reverse()
+{
+	list<value_type> nwlist;
+	iterator it = begin();
+	while (it != end())
+	{
+		nwlist.push_front(*(it));
+		it++;
+	}
+		
+	*this = nwlist;
+}
 
 
+//---------------------------------------------------------------------------------------
 
 
+// *** Non-member function overloads ***
 
+template <class T, class Alloc>
+bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+{
+    if (lhs.size() != rhs.size())
+        return false;
+    for (size_t i = 0; i < lhs.size(); i++)
+    {
+        if (lhs[i] != rhs[i])
+            return false;
+    }
+    return true;
+}
 
+template <class T, class Alloc>
+bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+{ return (!(lhs == rhs)); }
 
+template <class T, class Alloc>
+bool operator<  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+{
+    typename ft::list<T>::const_iterator	it_lhs = lhs.begin();
+	typename ft::list<T>::const_iterator	it_rhs = rhs.begin();
+
+    while (it_lhs != lhs.end() && it_rhs != rhs.end() && *it_lhs == *it_rhs)
+    {
+        ++it_lhs; 
+        ++it_rhs;
+    }
+    if (it_lhs == lhs.end())
+        return (it_rhs != rhs.end());
+    else if (it_rhs == rhs.end())
+        return (false);
+    return (*it_lhs < *it_rhs);
+}
+
+template <class T, class Alloc>
+bool operator<= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+{
+	if (lhs == rhs)
+		return (true);
+	return (lhs < rhs);
+}
+
+template <class T, class Alloc>
+bool operator>  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+{
+	if (lhs == rhs)
+		return (false);
+	return (!(lhs < rhs));
+}
+
+template <class T, class Alloc>
+bool operator>= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+{
+	if (lhs == rhs)
+		return (true);
+	return (!(lhs < rhs));
+}
+
+template <class T, class Alloc>
+void swap (list<T,Alloc>& x, list<T,Alloc>& y)
+{ x.swap(y); };
 
 
 

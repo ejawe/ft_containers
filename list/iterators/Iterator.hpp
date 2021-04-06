@@ -1,9 +1,11 @@
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
 
+#include "../list_class.hpp"
+
 namespace ft
 {
-    template <typename T>
+    template <typename T, typename node>
     class Iterator
     {
 
@@ -12,55 +14,33 @@ namespace ft
         // ******** Member type ********
         typedef     T                   value_type;
         typedef     std::ptrdiff_t      difference_type;
-        typedef     value_type*         pointer;
-        // typedef     const value_type*   const_pointer;
-        // typedef     value_type&         reference;
-        // typedef     const value_type&   const_reference;
-
+        typedef     node*               pointer;
 
         // ******** Constructors ********
         Iterator() : _ptr(NULL) {}
-        Iterator(value_type *ptr) : _ptr(ptr) {} // X a;
-        Iterator(Iterator const &src) : _ptr(src._ptr) {} // X b(a);
+        Iterator(pointer ptr) { _ptr = ptr; } // X a;
+        Iterator(Iterator const &src) { *this = src; } // X b(a);
         ~Iterator() { };
         Iterator &operator=(Iterator const &src) // b = a;
         { _ptr = src._ptr; return *this; }
 
-
-
         // *** Bool Operators ***
         bool	operator==(Iterator const& src) const { return (_ptr == src._ptr); }; // a == b
-        bool	operator!=(Iterator const& src) const { return (_ptr != src._ptr); }; // a != b
-        bool	operator<(Iterator const& src) const { return (_ptr < src._ptr); }; // a < b
-        bool	operator>(Iterator const& src) const { return (_ptr > src._ptr); }; // a > b
-        bool	operator<=(Iterator const& src) const { return (_ptr <= src._ptr); }; // a <= b
-        bool	operator>=(Iterator const& src) const { return (_ptr >= src._ptr); }; // a >= b
-
-
+        bool	operator!=(Iterator const& src) const { return (_ptr != src._ptr); }; // a != 
 
         // *** Arithmetic Operators ***
-        Iterator        operator+(difference_type src) { return (Iterator(_ptr + src)); }; // a + n
-        Iterator        operator-(difference_type src) { return (Iterator(_ptr - src)); }; // a - n
-        difference_type operator-(Iterator &src) { return (_ptr - src._ptr);} // a - b
-        difference_type operator+(Iterator &src) { return (_ptr + src._ptr);} // a + b
-        Iterator        &operator++() { _ptr++; return *this; } // ++a
-        Iterator        operator++(int) { Iterator it = *this; this->_ptr++; return it; } // a++
-
-        Iterator        &operator--() { _ptr--; return *this; } // --a
-        Iterator        operator--(int) { Iterator it = *this; this->_ptr--; return it; } // a--
-        Iterator        &operator+=(difference_type src) { _ptr += src; return (*this); }; // a += n
-        Iterator        &operator-=(difference_type src) { _ptr -= src; return (*this); }; // a -= n
-
-
+        Iterator        &operator++() { _ptr = _ptr->next; return *this; } // ++a
+        Iterator        operator++(int) { Iterator it = *this; ++(*this); return it; } // a++
+        Iterator        &operator--() { _ptr = _ptr->prev; return *this; } // --a
+        Iterator        operator--(int) { Iterator it = *this; --(*this); return it; } // a--
 
         // *** Dereferencing Operators ***
-        value_type&             operator*() { return *this->_ptr; };  // *a
-        value_type&             operator[](difference_type src) { return (*(this->_ptr + src)); }; // a[n]
-        value_type*             operator->() { return this->_ptr; };  // a->m
-        value_type*             operator ->() const { return (_ptr); };	
+        value_type&             operator*() { return _ptr->val; };  // *a
+        pointer                 operator->() { return _ptr; };  // a->m
+        pointer                 operator ->() const { return (_ptr); };	
         
     private:
-        value_type *_ptr;
+        pointer _ptr;
 
     };
 

@@ -32,4 +32,6 @@ https://docs.microsoft.com/en-us/cpp/standard-library/iterator-operators?view=ms
 - max_size
 https://stackoverflow.com/questions/27508872/why-does-stdlist-have-a-max-size
 
+- Strict Weak Ordering
+https://www.boost.org/sgi/stl/StrictWeakOrdering.html
 

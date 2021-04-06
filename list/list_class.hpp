@@ -35,10 +35,11 @@ public:
 	typedef typename	allocator_type::const_reference			const_reference;
 	typedef typename	allocator_type::pointer					pointer;
 	typedef typename	allocator_type::const_pointer			const_pointer;
-	typedef typename	ft::Iterator<T>							iterator;
-	typedef typename	ft::Const_Iterator<T>					const_iterator;
-	typedef typename	ft::Reverse_Iterator<iterator>			reverse_iterator;
-	typedef typename	ft::Const_Reverse_Iterator<iterator>	const_reverse_iterator;
+	typedef				Node<T>									node;
+	typedef typename	ft::Iterator<T, node>					iterator;
+	typedef typename	ft::Const_Iterator<T, node>				const_iterator;
+	typedef typename	ft::Reverse_Iterator<iterator, node>	reverse_iterator;
+	typedef typename	ft::Const_Reverse_Iterator<iterator, node>	const_reverse_iterator;
 	typedef				std::ptrdiff_t							difference_type;
 	typedef				size_t									size_type; 
 	
@@ -105,16 +106,28 @@ public:
 	void unique();
 	template <class BinaryPredicate>
 	void unique (BinaryPredicate binary_pred);
-	// void merge (list& x);
-	// template <class Compare>
-	// void merge (list& x, Compare comp);
-
+	void merge (list& x);
+	template <class Compare>
+	void merge (list& x, Compare comp);
+	void sort();
+	template <class Compare>
+	void sort (Compare comp);
+	void reverse();
 
 private:
-	allocator_type	_alloc;
 	size_type		_size;
+	allocator_type	_alloc;
 	Node<T>			*_node;
 	// prev : dernier node, next : premier node
+
+	template <typename T1>
+	struct _less 
+	{
+		bool operator()(const T1 &x, const T1 &y)
+		{
+			return x > y;
+		};
+	};
 
 }; //-------------------end List Class 
 

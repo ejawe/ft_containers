@@ -492,7 +492,8 @@ bool operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 }
 
 template <class T, class Alloc>
-void swap (vector<T,Alloc>& x, vector<T,Alloc>& y) { x.swap(y); };
+void swap (vector<T,Alloc>& x, vector<T,Alloc>& y) 
+{ x.swap(y); };
 
 }; //-------------------end Namespace ft
 
