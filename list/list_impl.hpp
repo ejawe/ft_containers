@@ -51,7 +51,7 @@ _alloc(alloc)
 // copy
 template <typename T, typename Alloc>
 list<T, Alloc>::list(const list& x) :
-_size(x._size),
+_size(0),
 _alloc(x._alloc)
 
 {
@@ -82,7 +82,6 @@ list<T, Alloc>::~list()
 		pop_back();
 		i++;
 	}
-	// clear();
 	delete _node;
 	
 }
@@ -284,23 +283,27 @@ template <typename T, typename Alloc>
 typename list<T, Alloc>::iterator list<T, Alloc>::erase (iterator position)
 {
 	Node<T> *element = position.operator->();
-	element->prev->next = element->next;
-	element->next->prev = element->prev;
+	Node<T> *next = element->next;
+	Node<T> *prev = element->prev;
 	delete element;
+	prev->next = next;
+	next->prev = prev;
 	_size--;
-	return (position);
+	
+	return (iterator(next));
 }
 
 template <typename T, typename Alloc>
 typename list<T, Alloc>::iterator list<T, Alloc>::erase (iterator first, iterator last)
 {
+	
 	iterator it = first;
 	while (first != last)
 	{
 		it = erase(first);
 		first++;
 	}
-		
+	
 	return (it);
 }
 
@@ -443,11 +446,24 @@ void list<T, Alloc>::merge (list& x)
 template <typename T, typename Alloc> template <class Compare>
 void list<T, Alloc>::merge (list& x, Compare comp)
 {
-	if (&x == this)
-		return;
-	insert(end(), x.begin(), x.end());
-	x.clear();
-	sort(comp);
+	iterator 	startx = x.begin();
+	iterator 	start = begin();
+
+	while (startx != x.end() && start != end())
+	{
+		if (comp(*startx, *start))
+		{
+			splice(start, x, startx);
+			startx++;
+		}
+		else
+			start++;
+	}
+	while (startx != x.end())
+	{
+		splice(end(), x, startx);
+		startx++;
+	}
 }
 
 template <typename T, typename Alloc>
@@ -459,18 +475,22 @@ void list<T, Alloc>::sort()
 template <typename T, typename Alloc> template <class Compare>
 void list<T, Alloc>::sort (Compare comp)
 {
-	iterator prev = begin();
-	iterator next;
-	while (prev + 1 != end())
+	iterator	prev = begin();
+	iterator	next = ++begin();
+
+	while (next != end())
 	{
-		next = prev + 1;
-		while (next != end())
+		if (*prev != *next && comp(*prev, *next) == false)
 		{
-			if (comp(*prev, *next))
-				swap(*prev, *next);
+			splice(prev, *this, next);
+			prev = begin();
+			next = ++begin();
+		}
+		else
+		{
+			prev = next;
 			next++;
 		}
-		prev++;
 	}
 }
 
@@ -499,10 +519,16 @@ bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
 {
     if (lhs.size() != rhs.size())
         return false;
-    for (size_t i = 0; i < lhs.size(); i++)
+	
+    typename ft::list<T>::const_iterator	it_lhs = lhs.begin();
+	typename ft::list<T>::const_iterator	it_rhs = rhs.begin();
+    while (it_lhs != lhs.end())
     {
-        if (lhs[i] != rhs[i])
-            return false;
+		
+		if (*it_lhs != *it_rhs)
+			return false;
+        ++it_lhs; 
+        ++it_rhs;
     }
     return true;
 }
