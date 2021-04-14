@@ -86,6 +86,11 @@ list<T, Alloc>::~list()
 	
 }
 
+
+//---------------------------------------------------------------------------------------
+
+
+
 // *** Iterator ***
 template <typename T, typename Alloc>
 typename list<T, Alloc>::iterator list<T, Alloc>::begin()
@@ -114,12 +119,12 @@ typename list<T, Alloc>::const_reverse_iterator list<T, Alloc>::rbegin() const
 
 template <typename T, typename Alloc>
 typename list<T, Alloc>::reverse_iterator list<T, Alloc>::rend()
-{ return reverse_iterator(_node); } // a verifier
+{ return reverse_iterator(_node); } 
 
 
 template <typename T, typename Alloc>
 typename list<T, Alloc>::const_reverse_iterator list<T, Alloc>::rend() const
-{ return const_reverse_iterator(_node); } // a verifier
+{ return const_reverse_iterator(_node); } 
 
 
 //---------------------------------------------------------------------------------------
@@ -140,7 +145,7 @@ typename list<T, Alloc>::size_type list<T, Alloc>::size() const
 
 template <typename T, typename Alloc>
 typename list<T, Alloc>::size_type list<T, Alloc>::max_size() const
-{ return (std::numeric_limits<difference_type>::max() / (sizeof(Node<T>) / 2 ?: 1)); } // a verifier
+{ return (std::numeric_limits<difference_type>::max() / (sizeof(Node<T>) / 2 ?: 1)); } 
 
 
 //---------------------------------------------------------------------------------------
