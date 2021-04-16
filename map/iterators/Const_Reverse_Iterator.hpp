@@ -47,7 +47,7 @@ namespace ft
                 while (_ptr->right == child)
                 {
                     child = _ptr;
-                    _ptr = _map->parent;
+                    _ptr = _ptr->parent;
                 }
             }
             return (*this);
@@ -76,12 +76,12 @@ namespace ft
         Const_Reverse_Iterator      operator--(int) { Const_Reverse_Iterator it = *this; ++(*this); return it; }
 
         // *** Dereferencing Operators ***
-        const value_type&		operator*() { return _ptr->val; };
-        const pointer		    operator->() { return &_ptr->val; };
-        const pointer           operator ->() const { return &_ptr->val; };
+        const value_type&		operator*() { return _ptr->data; };
+        const pointer		    operator->() { return &_ptr->data; };
+        const pointer           operator ->() const { return &_ptr->data; };
 
     private:
-        pointer _ptr;
+        node *_ptr;
 
     };
 };

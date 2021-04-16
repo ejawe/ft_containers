@@ -1,8 +1,6 @@
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
 
-#include "../list_class.hpp"
-
 namespace ft
 {
     template <typename T, typename node>

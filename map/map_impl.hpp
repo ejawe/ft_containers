@@ -11,7 +11,7 @@ namespace ft
 
 // empty
 template <class Key, class T, class Compare, class Alloc>
-map<Key, T, Compare, Alloc>::map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) :
+map<Key, T, Compare, Alloc>::map (const key_compare& comp, const allocator_type& alloc) :
 _size(0), _alloc(alloc), _key_comp(comp)
 {
 	_node = new node_type();
@@ -23,7 +23,7 @@ _size(0), _alloc(alloc), _key_comp(comp)
 // range
 template <class Key, class T, class Compare, class Alloc> template <class InputIterator>
 map<Key, T, Compare, Alloc>::map (typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first, 
-InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) :
+InputIterator last, const key_compare& comp, const allocator_type& alloc) :
 _size(0), _alloc(alloc), _key_comp(comp)
 {
 	_node = new node_type();
@@ -37,7 +37,7 @@ _size(0), _alloc(alloc), _key_comp(comp)
 template <class Key, class T, class Compare, class Alloc>
 map<Key, T, Compare, Alloc>::map (const map& x) :
 _size(0),
-_alloc(x._alloc)
+_alloc(x._alloc),
 _key_comp(x._key_comp)
 {
 	_node = new node_type();
@@ -63,7 +63,7 @@ map<Key, T, Compare, Alloc>& map<Key, T, Compare, Alloc>::operator= (const map& 
 template <class Key, class T, class Compare, class Alloc>
 map<Key, T, Compare, Alloc>::~map()
 {
-	clear(); // a voir
+	clear();
 }
 
 
@@ -165,10 +165,24 @@ ft::pair<typename map<Key, T, Compare, Alloc>::iterator,bool>
 map<Key, T, Compare, Alloc>::insert (const value_type& val)
 {
 	ft::pair<iterator, bool> res;
-
-	res.second = !count(val.first);
+	
+	// count : return 1 si element trouvé
+	// fisrt : it element deja existant ou nouvel element
+	// second : false si exist dejà, true otherwise
+	if (count(val.first) == 1)
+		res.second = false;
+	else
+		res.second = true;
 	if (res.second == true)
-		add_node(new node_type(val));
+	{
+		value_type newpair(val);
+		node_type *newnode = new node_type();
+		newnode->left = NULL;
+		newnode->right = NULL;
+		newnode->parent = NULL;
+		newnode->data = newpair;
+		add_node(newnode);
+	}
 	res.first = find(val.first);
 	return (res);
 }
@@ -204,7 +218,7 @@ template<class Key, class T, class Compare, class Alloc>
 void
 map<Key, T, Compare, Alloc>::erase (iterator position)
 {
-	// a faire
+	erase((*position).first);
 }
 
 
@@ -212,15 +226,22 @@ template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::size_type
 map<Key, T, Compare, Alloc>::erase (const key_type& k)
 {
-	// a faire
+	iterator it = find(k);
+
+	if (it == end())
+		return 0;
+	delete_node(k, &_node);
+	return (1);
 }
+
 
 
 template<class Key, class T, class Compare, class Alloc>
 void
 map<Key, T, Compare, Alloc>::erase (iterator first, iterator last)
 {
-	// a faire
+	while (first != last)
+        erase(first++);
 }
 
 template<class Key, class T, class Compare, class Alloc>
@@ -411,34 +432,117 @@ map<Key, T, Compare, Alloc>::equal_range (const key_type& k)
 // *** Private ***
 
 template<class Key, class T, class Compare, class Alloc>
-void	map<Key, T, Compare, Alloc>::add_node(node_type newNode) 
+void	map<Key, T, Compare, Alloc>::add_node(node_type *newNode) 
 {
-	node_type *parent = &_node;
-	node_type *node = 	&_node;
-	node_type ghost = 	last_right(_node);
+	node_type **parent = &_node;
+	node_type **node = 	&_node;
+	node_type *ghost = 	last_right(_node);
 	bool 				side_left = -1;
 
-	++_size;
-	while (*node && *node != ghost)
+	while (*node && *node != ghost) // node become null when it found the new emplacement of newnode
 	{
 		parent = node;
-		side_left = _key_comp(newNode->data.first, (*node)->data.first);
-		node = (side_left ? &(*node)->left : &(*node)->right);
+		side_left = _key_comp(newNode->data.first, (*node)->data.first); // return true if newnode key < currentnode key
+		node = (side_left ? &(*node)->left : &(*node)->right); // if side_left = true, node = nodeleft, otherwise, noderigth
 	}
-	if (*node == NULL)
+	if (*node == NULL) // the new emplacement "node" is found, affectation : node is newnode
 	{
 		newNode->parent = (*parent);
 		*node = newNode;
 	}
-	else
+	else // if (*node == ghost)
 	{
 		*node = newNode;
 		newNode->parent = ghost->parent;
 		ghost->parent = last_right(newNode);
 		last_right(newNode)->right = ghost;
 	}
+	_size++;
 }
 
+template<class Key, class T, class Compare, class Alloc>
+typename map<Key, T, Compare, Alloc>::node_type *
+map<Key, T, Compare, Alloc>::search_by_key (key_type k, node_type *root)
+{
+	if (root == NULL)
+		return NULL;
+	if (root->data.first == k)
+		return root;
+	if (_key_comp(k, root->data.first))
+		return search_by_key(k, root->left);
+	if (!_key_comp(k, root->data.first) && root->data.first != k)
+		return search_by_key(k, root->right);
+	return (NULL);
+}
+
+template<class Key, class T, class Compare, class Alloc>
+void map<Key, T, Compare, Alloc>::delete_node(key_type val, node_type **root)
+{
+	node_type *nodeX = search_by_key(val, *root);
+
+	if (nodeX == NULL)
+		return;
+	
+	if (is_leaf(nodeX))				// *** No child
+	{
+			
+		std::cout << "del_node" << std::endl;
+		if (nodeX->parent->left == nodeX)
+			nodeX->parent->left = NULL;
+		else if (nodeX->parent->right == nodeX)
+			nodeX->parent->right = NULL;
+		else if (nodeX->parent == NULL) // root
+			root = NULL;
+		delete nodeX;
+		_size--;
+		return ;
+	}
+	else if (one_child(nodeX))		// *** One child
+	{
+		if (nodeX->parent->left == nodeX)
+		{
+			if (nodeX->left == NULL)
+			{
+				nodeX->parent->left = nodeX->right;
+				nodeX->right->parent = nodeX->parent;
+			}
+			else if (nodeX->right == NULL)
+			{
+				nodeX->parent->left = nodeX->left;
+				nodeX->left->parent = nodeX->parent;
+			}
+		}
+		else if (nodeX->parent->right == nodeX)
+		{
+			if (nodeX->left == NULL)
+			{
+				nodeX->parent->right = nodeX->right;
+				nodeX->right->parent = nodeX->parent;
+			}
+			else if (nodeX->right == NULL)
+			{
+				nodeX->parent->right = nodeX->left;
+				nodeX->left->parent = nodeX->parent;
+			}
+		}
+		else if (nodeX->parent == NULL) // root
+		{
+			if (nodeX->left == NULL)
+				root = &nodeX->right;
+			else if(nodeX->right == NULL)
+				root = &nodeX->left;
+		}
+		delete nodeX;
+		_size--;
+		return ;
+	}
+	else						// *** Two child
+	{
+		node_type *tmp = first_left(nodeX->right);
+		nodeX->data = tmp->data;
+		delete_node(nodeX->data.first, &nodeX->right);
+	}
+}
 //---------------------------------------------------------------------------------------
 
 

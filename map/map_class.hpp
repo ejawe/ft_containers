@@ -3,7 +3,10 @@
 
 #include <iostream>
 #include <memory>
+#include <stdexcept>
+#include <string>
 #include <limits>
+#include <cstddef> 
 #include "../utils.hpp"
 #include "iterators/Iterator.hpp"
 #include "iterators/Const_Iterator.hpp"
@@ -18,10 +21,10 @@ namespace ft
 template <typename T1>
 struct s_less 
 {
-	bool operator()(const T1 &x, const T1 &y)
+	bool operator()(const T1 &x, const T1 &y) const
 	{
 		return x < y;
-	};
+	}
 };
 
 
@@ -30,34 +33,33 @@ struct s_less
 
 
 
-// ******** Structure Pair ********
-template <class T1, class T2> 
-struct pair
+// ******** class Pair ********
+template <typename T1, typename T2> 
+class pair
 {
-	typedef T1		first_type;
-	typedef T2		second_type;
+public:
 
 	// ******** Data ********
-	first_type	_first;
-	second_type _second;
+	T1		first;
+	T2		second;
 
 	// ******** Member function ********
 
-	pair() { };
+	pair() : first(), second() { };
 	template<class U, class V>
-	pair (const pair<U, V> &pr) : _first(pr.first), _second(pr.second) { };
-	pair (const first_type& a, const second_type& b) : _first(a), _second(b) { };
+	pair (const pair<U, V> &pr) : first(pr.first), second(pr.second) { };
+	pair (const T1& a, const T2& b) : first(a), second(b) { };
 	~pair() { };
 
 	pair& operator= (const pair& pr)
 	{
 		if (this != &pr)
 		{
-			_first = pr.first;
-			_second = pr.second;
+			first = pr.first;
+			second = pr.second;
 		}
 		return *this;
-	}
+	};
 
 };
 
@@ -104,32 +106,35 @@ struct Node
 };
 
 template <typename T>
-Node<T>	*last_right(Node<T> *node) {
+Node<T>	*last_right(Node<T> *node) 
+{
 	while (node->right != NULL)
 		node = node->right;
 	return (node);
 }
 
 template <typename T>
-Node<T>	*first_left(Node<T> *node) {
+Node<T>	*first_left(Node<T> *node) 
+{
 	while (node->left != NULL)
 		node = node->left;
 	return (node);
 }
 
 template <typename T>
-Node<T>	*get_right(Node<T> *node) {
-	return (node->right);
+bool is_leaf(Node<T> *node) 
+{
+	if (node->left == NULL && node->right == NULL)
+		return true;
+	return false;
 }
 
 template <typename T>
-Node<T>	*get_left(Node<T> *node) {
-	return (node->left);
-}
-
-template <typename T>
-Node<T>	*get_parent(Node<T> *node) {
-	return (node->parent);
+bool one_child(Node<T> *node) 
+{
+	if ((node->left == NULL && node->right != NULL) || (node->left != NULL && node->right == NULL))
+		return true;
+	return false;
 }
 
 
@@ -152,23 +157,23 @@ public:
 
 	// ******** Member type ********
 
-	typedef				Key											key_type;
-	typedef				T											mapped_type;
-	typedef				ft::pair<const key_type,mapped_type>		value_type;
-	typedef				Compare										key_compare;
-	class 															value_compare;
-	typedef				Alloc										allocator_type;
-	typedef typename	allocator_type::reference					reference;
-	typedef typename	allocator_type::const_reference				const_reference;
-	typedef typename	allocator_type::pointer						pointer;
-	typedef typename	allocator_type::const_pointer				const_pointer;
-	typedef				Node<value_type>							node_type;
-	typedef typename	ft::Iterator<value_type, node>				iterator;
-	typedef typename	ft::Const_Iterator<value_type, node>		const_iterator;
-	typedef typename	ft::Reverse_Iterator<iterator, node>		reverse_iterator;
-	typedef typename	ft::Const_Reverse_Iterator<iterator, node>	const_reverse_iterator;
-	typedef				std::ptrdiff_t								difference_type;
-	typedef				size_t										size_type; 
+	typedef				Key												key_type;
+	typedef				T												mapped_type;
+	typedef				ft::pair<key_type,mapped_type>					value_type;
+	typedef				Compare											key_compare;
+	class 																value_compare;
+	typedef				Alloc											allocator_type;
+	typedef typename	allocator_type::reference						reference;
+	typedef typename	allocator_type::const_reference					const_reference;
+	typedef typename	allocator_type::pointer							pointer;
+	typedef typename	allocator_type::const_pointer					const_pointer;
+	typedef				Node<value_type>								node_type;
+	typedef typename	ft::Iterator<value_type, node_type>				iterator;
+	typedef typename	ft::Const_Iterator<value_type, node_type>		const_iterator;
+	typedef typename	ft::Reverse_Iterator<iterator, node_type>		reverse_iterator;
+	typedef typename	ft::Const_Reverse_Iterator<iterator, node_type>	const_reverse_iterator;
+	typedef				std::ptrdiff_t									difference_type;
+	typedef				size_t											size_type; 
 
 
 	// ******** Member function ********
@@ -234,7 +239,9 @@ private:
 	node_type			*_node;
 	key_compare			_key_comp;
 
-	void add_node(node_type newNode);
+	void add_node(node_type *newNode);
+	node_type *search_by_key(key_type k, node_type *root);
+	void delete_node(key_type val, node_type **root);
 
 }; //-------------------end Map Class 
 

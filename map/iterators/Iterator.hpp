@@ -1,7 +1,7 @@
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
 
-#include "../map_class.hpp"
+
 
 namespace ft
 {
@@ -14,11 +14,11 @@ namespace ft
         // ******** Member type ********
         typedef     T                   value_type;
         typedef     std::ptrdiff_t      difference_type;
-        typedef     node*               pointer;
+        typedef     value_type*         pointer;
 
         // ******** Constructors ********
         Iterator() : _ptr(NULL) {}
-        Iterator(pointer ptr) { _ptr = ptr; } // X a;
+        Iterator(node *ptr) { _ptr = ptr; } // X a;
         Iterator(Iterator const &src) { *this = src; } // X b(a);
         ~Iterator() { };
         Iterator &operator=(Iterator const &src) // b = a;
@@ -44,7 +44,7 @@ namespace ft
                 while (_ptr->right == child)
                 {
                     child = _ptr;
-                    _ptr = _map->parent;
+                    _ptr = _ptr->parent;
                 }
             }
             return (*this);
@@ -73,12 +73,15 @@ namespace ft
         Iterator        operator--(int) { Iterator it = *this; --(*this); return it; } // a--
 
         // *** Dereferencing Operators ***
-        value_type&             operator*() { return _ptr->val; };  // *a
-        pointer                 operator->() { return &_ptr->val; };  // a->m
-        pointer                 operator ->() const { return &_ptr->val; };	
+        value_type&             operator*() { return _ptr->data; };  // *a
+        pointer                 operator->() { return &_ptr->data; };  // a->m
+        pointer                 operator ->() const { return &_ptr->data; };
+
+
+        // node_type               *get_ptr(void) const { return (_ptr); };
         
     private:
-        pointer _ptr;
+        node *_ptr;
 
     };
 

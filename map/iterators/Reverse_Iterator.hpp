@@ -44,7 +44,7 @@ namespace ft
                 while (_ptr->right == child)
                 {
                     child = _ptr;
-                    _ptr = _map->parent;
+                    _ptr = _ptr->parent;
                 }
             }
             return (*this);
@@ -74,12 +74,12 @@ namespace ft
 
 
         // *** Dereferencing Operators ***
-        value_type&		operator*() { return _ptr->val; };
-        pointer		    operator->() { return &_ptr->val; };
-        pointer         operator ->() const { return &_ptr->val; };
+        value_type&		operator*() { return _ptr->data; };
+        pointer		    operator->() { return &_ptr->data; };
+        pointer         operator ->() const { return &_ptr->data; };
 
     private:
-        pointer _ptr;
+        node *_ptr;
 
     };
 };

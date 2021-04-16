@@ -35,3 +35,11 @@ https://stackoverflow.com/questions/27508872/why-does-stdlist-have-a-max-size
 - Strict Weak Ordering
 https://www.boost.org/sgi/stl/StrictWeakOrdering.html
 
+- MAP
+
+-tree
+https://www.youtube.com/watch?v=-BYPWouJxFw&list=PLprfEn_dJT0-uexVP05Lu2wlYLIFW32iG&ab_channel=LalithaNatraj
+
+- delete a node
+https://www.geeksforgeeks.org/inorder-successor-in-binary-search-tree/
+https://www.youtube.com/watch?v=hL9RUD33nYs&t=313s&ab_channel=GateSmashers
