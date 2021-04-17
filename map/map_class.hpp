@@ -124,8 +124,13 @@ Node<T>	*first_left(Node<T> *node)
 template <typename T>
 bool is_leaf(Node<T> *node) 
 {
+	
+	// std::cout << "leaf val = " << node->data.first << std::endl;
 	if (node->left == NULL && node->right == NULL)
+	{
+		std::cout << "leaf" << std::endl;
 		return true;
+	}
 	return false;
 }
 
@@ -161,7 +166,21 @@ public:
 	typedef				T												mapped_type;
 	typedef				ft::pair<key_type,mapped_type>					value_type;
 	typedef				Compare											key_compare;
-	class 																value_compare;
+	// class 																value_compare;
+	class value_compare 
+	{
+
+	public:
+		Compare comp;
+		value_compare(Compare c) : comp(c) { };
+
+		typedef bool		result_type;
+		typedef value_type	first_argument_type;
+		typedef value_type	second_argument_type;
+
+		bool	operator()(const value_type &x, const value_type &y) const 
+		{ return comp(x.first, y.first); }
+	};
 	typedef				Alloc											allocator_type;
 	typedef typename	allocator_type::reference						reference;
 	typedef typename	allocator_type::const_reference					const_reference;

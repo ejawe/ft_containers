@@ -14,6 +14,7 @@ template <class Key, class T, class Compare, class Alloc>
 map<Key, T, Compare, Alloc>::map (const key_compare& comp, const allocator_type& alloc) :
 _size(0), _alloc(alloc), _key_comp(comp)
 {
+	_node = NULL;
 	_node = new node_type();
 	_node->left = NULL;
 	_node->right = NULL;
@@ -26,6 +27,7 @@ map<Key, T, Compare, Alloc>::map (typename ft::enable_if<!std::numeric_limits<In
 InputIterator last, const key_compare& comp, const allocator_type& alloc) :
 _size(0), _alloc(alloc), _key_comp(comp)
 {
+	_node = NULL;
 	_node = new node_type();
 	_node->left = NULL;
 	_node->right = NULL;
@@ -40,6 +42,7 @@ _size(0),
 _alloc(x._alloc),
 _key_comp(x._key_comp)
 {
+	_node = NULL;
 	_node = new node_type();
 	_node->left = NULL;
 	_node->right = NULL;
@@ -182,6 +185,11 @@ map<Key, T, Compare, Alloc>::insert (const value_type& val)
 		newnode->parent = NULL;
 		newnode->data = newpair;
 		add_node(newnode);
+		std::cout << "size insert = " << _size << std::endl;
+		if (_size == 2)
+			std::cout << "insert parent key = " << _node->right->data.first << std::endl;
+		// std::cout << "insert val = " << newnode->data.second << std::endl;
+
 	}
 	res.first = find(val.first);
 	return (res);
@@ -218,6 +226,8 @@ template<class Key, class T, class Compare, class Alloc>
 void
 map<Key, T, Compare, Alloc>::erase (iterator position)
 {
+	std::cout << "key = " << (*position).first << std::endl;
+	std::cout << "val = " << (*position).second << std::endl;
 	erase((*position).first);
 }
 
@@ -240,6 +250,13 @@ template<class Key, class T, class Compare, class Alloc>
 void
 map<Key, T, Compare, Alloc>::erase (iterator first, iterator last)
 {
+	// std::cout << "erase = " << (*first).first << std::endl;
+	std::cout << "size = " << _size << std::endl;
+	if (_size == 1)
+	{
+		delete_node((*first).first, &_node);
+		return;
+	}
 	while (first != last)
         erase(first++);
 }
@@ -432,33 +449,45 @@ map<Key, T, Compare, Alloc>::equal_range (const key_type& k)
 // *** Private ***
 
 template<class Key, class T, class Compare, class Alloc>
-void	map<Key, T, Compare, Alloc>::add_node(node_type *newNode) 
+void
+map<Key, T, Compare, Alloc>::add_node(node_type *newNode) 
 {
-	node_type **parent = &_node;
-	node_type **node = 	&_node;
-	node_type *ghost = 	last_right(_node);
-	bool 				side_left = -1;
+	std::cout << "add" << std::endl;
+	if (_size == 0)
+	{
+		
+		*_node = *newNode;
+		_size++;
+		return;
+	}
+	
+	node_type **parent = NULL;
+	node_type **current = &_node;
 
-	while (*node && *node != ghost) // node become null when it found the new emplacement of newnode
+	while (*current != NULL)
 	{
-		parent = node;
-		side_left = _key_comp(newNode->data.first, (*node)->data.first); // return true if newnode key < currentnode key
-		node = (side_left ? &(*node)->left : &(*node)->right); // if side_left = true, node = nodeleft, otherwise, noderigth
+		
+		parent = current;
+		// std::cout << "current" << std::endl;
+		if (_key_comp(newNode->data.first, (*current)->data.first)) // return true if newnode key < currentnode key
+			current = &(*current)->left;
+		else
+			current = &(*current)->right;
 	}
-	if (*node == NULL) // the new emplacement "node" is found, affectation : node is newnode
+	if (_key_comp(newNode->data.first, (*parent)->data.first)) // return true if newnode key < parentnode key
 	{
-		newNode->parent = (*parent);
-		*node = newNode;
+		(*parent)->left = newNode;
+		// std::cout << "add parent key = " << parent->data.first << std::endl;
 	}
-	else // if (*node == ghost)
-	{
-		*node = newNode;
-		newNode->parent = ghost->parent;
-		ghost->parent = last_right(newNode);
-		last_right(newNode)->right = ghost;
+	else
+	{		
+		(*parent)->right = newNode;
+		std::cout << "add parent key = " << (*parent)->data.first << std::endl;
 	}
+	// std::cout << "add key = " << (*newNode)->data.first << std::endl;
 	_size++;
 }
+
 
 template<class Key, class T, class Compare, class Alloc>
 typename map<Key, T, Compare, Alloc>::node_type *
@@ -478,29 +507,64 @@ map<Key, T, Compare, Alloc>::search_by_key (key_type k, node_type *root)
 template<class Key, class T, class Compare, class Alloc>
 void map<Key, T, Compare, Alloc>::delete_node(key_type val, node_type **root)
 {
+	
+
 	node_type *nodeX = search_by_key(val, *root);
+
+	std::cout << "del key = " << nodeX->data.first << std::endl;
+	std::cout << "del val = " << nodeX->data.second << std::endl;
 
 	if (nodeX == NULL)
 		return;
-	
+	if (nodeX == _node)
+	{
+		std::cout << "is node" << std::endl;
+		if (nodeX->parent == NULL)
+			std::cout << "parent node is null" << std::endl;
+		if (nodeX->left == NULL)
+		{
+			std::cout << "left null" << std::endl;
+			// std::cout << "left null" << nodeX->right->data.first << std::endl;
+			_node = nodeX->right;
+		}
+		else if(nodeX->right == NULL)
+		{
+			std::cout << "right null" << std::endl;
+			_node = nodeX->left;
+		}
+		delete nodeX;
+		_size--;
+		return ;
+	}
 	if (is_leaf(nodeX))				// *** No child
 	{
+		
+		if (nodeX->parent == NULL) // root
+		{
 			
-		std::cout << "del_node" << std::endl;
-		if (nodeX->parent->left == nodeX)
-			nodeX->parent->left = NULL;
-		else if (nodeX->parent->right == nodeX)
-			nodeX->parent->right = NULL;
-		else if (nodeX->parent == NULL) // root
 			root = NULL;
+		}
+		else if (nodeX->parent->left == nodeX)
+		{
+			nodeX->parent->left = NULL;
+			
+		}
+		else if (nodeX->parent->right == nodeX)
+		{
+			nodeX->parent->right = NULL;
+			
+		}
+		
 		delete nodeX;
 		_size--;
 		return ;
 	}
 	else if (one_child(nodeX))		// *** One child
 	{
+		std::cout << "del_node" << std::endl;
 		if (nodeX->parent->left == nodeX)
 		{
+			std::cout << "del left" << std::endl;
 			if (nodeX->left == NULL)
 			{
 				nodeX->parent->left = nodeX->right;
@@ -514,6 +578,7 @@ void map<Key, T, Compare, Alloc>::delete_node(key_type val, node_type **root)
 		}
 		else if (nodeX->parent->right == nodeX)
 		{
+			std::cout << "del left" << std::endl;
 			if (nodeX->left == NULL)
 			{
 				nodeX->parent->right = nodeX->right;
@@ -525,8 +590,9 @@ void map<Key, T, Compare, Alloc>::delete_node(key_type val, node_type **root)
 				nodeX->left->parent = nodeX->parent;
 			}
 		}
-		else if (nodeX->parent == NULL) // root
+		if (nodeX->parent == NULL) // root
 		{
+			std::cout << "del parent" << std::endl;
 			if (nodeX->left == NULL)
 				root = &nodeX->right;
 			else if(nodeX->right == NULL)
@@ -547,21 +613,21 @@ void map<Key, T, Compare, Alloc>::delete_node(key_type val, node_type **root)
 
 
 // *** class value_compare ***
-template <class Key, class T, class Compare, class Alloc>
-class	map<Key, T, Compare, Alloc>::value_compare 
-{
+// template <class Key, class T, class Compare, class Alloc>
+// class	map<Key, T, Compare, Alloc>::value_compare 
+// {
 
-public:
-	Compare comp;
-	value_compare(Compare c) : comp(c) { };
+// public:
+// 	Compare comp;
+// 	value_compare(Compare c) : comp(c) { };
 
-	typedef bool		result_type;
-	typedef value_type	first_argument_type;
-	typedef value_type	second_argument_type;
+// 	typedef bool		result_type;
+// 	typedef value_type	first_argument_type;
+// 	typedef value_type	second_argument_type;
 
-	bool	operator()(const value_type &x, const value_type &y) const 
-	{ return comp(x.first, y.first); }
-};
+// 	bool	operator()(const value_type &x, const value_type &y) const 
+// 	{ return comp(x.first, y.first); }
+// };
 
 }; //-------------------end Namespace ft
 

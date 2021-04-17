@@ -19,18 +19,18 @@ int main()
 	{std::map<char,int> first;
 
 	first['a']=10;
-	// first['b']=30;
-	// first['c']=50;
-	// first['d']=70;
+	first['b']=30;
+	first['c']=50;
+	first['d']=70;
 
-	// std::map<char,int> second (first.begin(),first.end());
+	std::map<char,int> second (first.begin(),first.end());
 
-	// std::map<char,int> third (second);
+	std::map<char,int> third (second);
 
-	// std::map<char,int,classcomp> fourth;                 // class as Compare
+	std::map<char,int,classcomp> fourth;                 // class as Compare
 
-	// bool(*fn_pt)(char,char) = fncomp;
-	// std::map<char,int,bool(*)(char,char)> fifth (fn_pt); // function pointer as Compare
+	bool(*fn_pt)(char,char) = fncomp;
+	std::map<char,int,bool(*)(char,char)> fifth (fn_pt); // function pointer as Compare
 	}
 
 	std::cout << "-----------------------------" << std::endl;
@@ -38,10 +38,9 @@ int main()
 	{ft::map<char,int> first;
 
 	first['a'] = 10;
-	std::cout << "ok fin" << std::endl;
-	// first['b']=30;
-	// first['c']=50;
-	// first['d']=70;
+	first['b'] = 30;
+	first['c'] = 50;
+	first['d']=70;
 
 	// ft::map<char,int> second (first.begin(),first.end());
 
@@ -52,11 +51,6 @@ int main()
 	// bool(*fn_pt)(char,char) = fncomp;
 	// ft::map<char,int,bool(*)(char,char)> fifth (fn_pt); // function pointer as Compare
 	}
-
-
-
-
-	std::cout << "ok fin fin" << std::endl;
 
 
 
