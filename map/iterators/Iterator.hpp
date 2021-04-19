@@ -2,7 +2,6 @@
 # define ITERATOR_HPP
 
 
-
 namespace ft
 {
     template <typename T, typename node>
@@ -78,7 +77,7 @@ namespace ft
         pointer                 operator ->() const { return &_ptr->data; };
 
 
-        // node_type               *get_ptr(void) const { return (_ptr); };
+        node               *get_ptr(void) const { return (_ptr); };
         
     private:
         node *_ptr;

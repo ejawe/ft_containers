@@ -403,10 +403,10 @@ typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator first, iter
 template <typename T, typename Alloc>
 void vector<T, Alloc>::swap (vector& x)
 {
-    std::swap(_alloc, x._alloc);
-    std::swap(_capacity, x._capacity);
-    std::swap(_size, x._size);
-    std::swap(_data, x._data);
+    ft::swap(_alloc, x._alloc);
+    ft::swap(_capacity, x._capacity);
+    ft::swap(_size, x._size);
+    ft::swap(_data, x._data);
 }
 
 template <typename T, typename Alloc>

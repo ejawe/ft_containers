@@ -322,6 +322,9 @@ void list<T, Alloc>::swap (list& x)
 	x._node = tmpnode;
 	_size = x._size;
 	x._size = tmpsize;
+    // ft::swap(_node, x._node);
+    // ft::swap(_alloc, x._alloc);
+    // ft::swap(_size, x._size);
 }
 
 template <typename T, typename Alloc>

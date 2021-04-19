@@ -108,8 +108,13 @@ struct Node
 template <typename T>
 Node<T>	*last_right(Node<T> *node) 
 {
+	if (node == NULL)
+		return NULL;
 	while (node->right != NULL)
+	{
+		// std::cout << "laaast" << std::endl;
 		node = node->right;
+	}
 	return (node);
 }
 
@@ -128,7 +133,7 @@ bool is_leaf(Node<T> *node)
 	// std::cout << "leaf val = " << node->data.first << std::endl;
 	if (node->left == NULL && node->right == NULL)
 	{
-		std::cout << "leaf" << std::endl;
+		// std::cout << "leaf" << std::endl;
 		return true;
 	}
 	return false;
@@ -252,10 +257,15 @@ public:
 	pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
 	pair<iterator,iterator> equal_range (const key_type& k);
 	
+	// *** Overload operators *** ----------------------------------- a faire
+
+
 private:
 	size_type			_size;
 	allocator_type		_alloc;
 	node_type			*_node;
+	node_type			*_end_tree;
+	node_type			*_begin_tree;
 	key_compare			_key_comp;
 
 	void add_node(node_type *newNode);

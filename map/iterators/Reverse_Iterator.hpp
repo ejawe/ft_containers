@@ -3,6 +3,7 @@
 
 #include "Iterator.hpp"
 
+
 namespace ft
 {
     template <typename iterator, typename node>
@@ -18,7 +19,7 @@ namespace ft
         // ******** Constructors ********
         Reverse_Iterator() {}
         Reverse_Iterator(pointer ptr) {_ptr = ptr; }
-        Reverse_Iterator(Iterator<value_type, node> const &src) { _ptr = src.operator->(); } ;
+        Reverse_Iterator(Iterator<value_type, node> const &src) { _ptr = src.get_ptr(); } ;
         Reverse_Iterator(Reverse_Iterator const &src) { *this = src; } ;
         ~Reverse_Iterator() { };
         Reverse_Iterator &operator=(Reverse_Iterator const &src)
@@ -30,27 +31,6 @@ namespace ft
 
         // *** Arithmetic Operators ***
         Reverse_Iterator        &operator++() 
-        {
-            if (_ptr->right != NULL)
-            {
-                _ptr = _ptr->right;
-                while (_ptr->left != NULL)
-                    _ptr = _ptr->left;
-            }
-            else
-            {
-                node *child = _ptr;
-                _ptr = _ptr->parent;
-                while (_ptr->right == child)
-                {
-                    child = _ptr;
-                    _ptr = _ptr->parent;
-                }
-            }
-            return (*this);
-        }
-        Reverse_Iterator        operator++(int) { Reverse_Iterator it = *this; --(*this); return it; }
-        Reverse_Iterator        &operator--() 
         {
             if (_ptr->left != NULL)
             {
@@ -70,7 +50,28 @@ namespace ft
             }
             return (*this);
         }
-        Reverse_Iterator        operator--(int) { Reverse_Iterator it = *this; ++(*this); return it; }
+        Reverse_Iterator        operator++(int) { Reverse_Iterator it = *this; ++(*this); return it; }
+        Reverse_Iterator        &operator--() 
+        {
+            if (_ptr->right != NULL)
+            {
+                _ptr = _ptr->right;
+                while (_ptr->left != NULL)
+                    _ptr = _ptr->left;
+            }
+            else
+            {
+                node *child = _ptr;
+                _ptr = _ptr->parent;
+                while (_ptr->right == child)
+                {
+                    child = _ptr;
+                    _ptr = _ptr->parent;
+                }
+            }
+            return (*this);
+        }
+        Reverse_Iterator        operator--(int) { Reverse_Iterator it = *this; --(*this); return it; }
 
 
         // *** Dereferencing Operators ***

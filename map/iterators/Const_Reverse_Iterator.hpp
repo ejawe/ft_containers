@@ -34,27 +34,6 @@ namespace ft
         // *** Arithmetic Operators ***
         Const_Reverse_Iterator      &operator++() 
         {
-            if (_ptr->right != NULL)
-            {
-                _ptr = _ptr->right;
-                while (_ptr->left != NULL)
-                    _ptr = _ptr->left;
-            }
-            else
-            {
-                node *child = _ptr;
-                _ptr = _ptr->parent;
-                while (_ptr->right == child)
-                {
-                    child = _ptr;
-                    _ptr = _ptr->parent;
-                }
-            }
-            return (*this);
-        }
-        Const_Reverse_Iterator      operator++(int) { Const_Reverse_Iterator it = *this; --(*this); return it; }
-        Const_Reverse_Iterator      &operator--() 
-        {
             if (_ptr->left != NULL)
             {
                 _ptr = _ptr->left;
@@ -73,7 +52,28 @@ namespace ft
             }
             return (*this);
         }
-        Const_Reverse_Iterator      operator--(int) { Const_Reverse_Iterator it = *this; ++(*this); return it; }
+        Const_Reverse_Iterator      operator++(int) { Const_Reverse_Iterator it = *this; ++(*this); return it; }
+        Const_Reverse_Iterator      &operator--() 
+        {
+            if (_ptr->right != NULL)
+            {
+                _ptr = _ptr->right;
+                while (_ptr->left != NULL)
+                    _ptr = _ptr->left;
+            }
+            else
+            {
+                node *child = _ptr;
+                _ptr = _ptr->parent;
+                while (_ptr->right == child)
+                {
+                    child = _ptr;
+                    _ptr = _ptr->parent;
+                }
+            }
+            return (*this);
+        }
+        Const_Reverse_Iterator      operator--(int) { Const_Reverse_Iterator it = *this; --(*this); return it; }
 
         // *** Dereferencing Operators ***
         const value_type&		operator*() { return _ptr->data; };
