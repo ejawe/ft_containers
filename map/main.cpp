@@ -37,7 +37,8 @@ int main()
 
 	std::cout << "-----------------------------" << std::endl;
 	std::cout << "ft :" << std::endl;
-	{ft::map<char,int> first;
+	{
+	ft::map<char,int> first;
 
 	first['a'] = 10;
 	first['b'] = 30;
@@ -792,5 +793,9 @@ int main()
 	std::cout << "bar contains:\n";
 	for (ft::map<char,int>::iterator it=bar.begin(); it!=bar.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';}
+
+
+
+
 	return 0;
 }
