@@ -749,7 +749,7 @@ int main()
 	if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";}
 
     std::cout << "***************************************" << std::endl;
-    std::cout << "****** test relational operators ******" << std::endl;
+    std::cout << "*************** test swap *************" << std::endl;
     std::cout << "***************************************" << std::endl << std::endl;
 	std::cout << "std :" << std::endl;
 	{
