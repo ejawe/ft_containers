@@ -795,7 +795,39 @@ int main()
 		std::cout << it->first << " => " << it->second << '\n';}
 
 
+    std::cout << "***************************************" << std::endl;
+    std::cout << "************* test other ***************" << std::endl;
+    std::cout << "***************************************" << std::endl << std::endl;
+	std::cout << "std :" << std::endl;
+	{std::map<int,int> mymap;
 
+	mymap[10] = 100;
+	mymap[5] = 200;
+	mymap[15] = 300;
+	mymap[7] = 400;
+	mymap[2] = 800;
+	mymap[9] = 10;
+	mymap[31] = 1;
+
+	// show content:
+	for (std::map<int,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';}
+
+	std::cout << "-----------------------------" << std::endl;
+	std::cout << "ft :" << std::endl;
+	{ft::map<int,int> mymap;
+
+	mymap[10] = 100;
+	mymap[5] = 200;
+	mymap[15] = 300;
+	mymap[7] = 400;
+	mymap[2] = 800;
+	mymap[9] = 10;
+	mymap[31] = 1;
+
+	// show content:
+	for (ft::map<int,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';}
 
 	return 0;
 }

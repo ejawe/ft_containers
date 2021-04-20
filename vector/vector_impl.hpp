@@ -49,15 +49,10 @@ template <typename T, typename Alloc>
 vector<T, Alloc>::vector (const vector& x) :
 _data(NULL),
 _alloc(x._alloc),
-_size(x._size),
-_capacity(x._capacity)
+_size(0),
+_capacity(0)
 {
-    reserve(_capacity);
-    if (x._data)
-    {
-        for (size_type i = 0; i < x._size; i++)
-            push_back(x._data[i]);
-    }
+    *this = x;
 }
 
 // operator=
@@ -65,13 +60,11 @@ template <typename T, typename Alloc>
 vector<T, Alloc> &vector<T, Alloc>::operator=(const vector& x)
 {
     clear();
-    if (!x._data)
-        return;
-    reserve(x.capacity);
-    for (iterator it = x.begin(); it != x.end(); it++)
+    for (const_iterator it = x.begin(); it != x.end(); it++)
 		push_back(*it);
     _size = x._size;
     _capacity = x._capacity;
+    return (*this);
 }
 
 // *** Destructors ***
@@ -418,11 +411,12 @@ void    vector<T, Alloc>::clear()
     {
         for (size_type i = 0; i < _size; i++)
             _alloc.destroy(&_data[i]);
-        _alloc.deallocate(_data, _capacity);
-        _data = NULL;
-        _size = 0;
-        _capacity = 0;
+
     }
+    _alloc.deallocate(_data, _capacity);
+    _data = NULL;
+    _size = 0;
+    _capacity = 0;
 }
 
 //---------------------------------------------------------------------------------------

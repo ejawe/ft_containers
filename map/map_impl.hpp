@@ -643,7 +643,6 @@ void map<Key, T, Compare, Alloc>::delete_node(key_type val, node_type **root)
 		if (nodeX->left == NULL || nodeX->left == _begin_tree)
 		{
 			node_type *f = first_left(nodeX->right);
-
 			_node = nodeX->right;
 			_begin_tree->parent = f;			
 			f->left = _begin_tree;
@@ -691,18 +690,11 @@ void map<Key, T, Compare, Alloc>::delete_node(key_type val, node_type **root)
 				nodeX->left->parent = nodeX->parent;
 			}
 		}
-		if (nodeX->parent == NULL) // root
-		{
-			if (nodeX->left == NULL)
-				root = &nodeX->right;
-			else if(nodeX->right == NULL)
-				root = &nodeX->left;
-		}
 		delete nodeX;
 		_size--;
 		return ;
 	}
-	else						// *** Two child
+	else							// *** Two child
 	{
 		node_type *tmp = first_left(nodeX->right);
 		nodeX->data = tmp->data;
