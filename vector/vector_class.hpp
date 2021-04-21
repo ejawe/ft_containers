@@ -26,14 +26,14 @@ public:
 
 	typedef				T										value_type;
 	typedef				Alloc									allocator_type;
-	typedef typename	allocator_type::reference				reference;
-	typedef typename	allocator_type::const_reference			const_reference;
-	typedef typename	allocator_type::pointer					pointer;
-	typedef typename	allocator_type::const_pointer			const_pointer;
-	typedef typename	ft::Iterator<T>							iterator;
-	typedef typename	ft::Const_Iterator<T>					const_iterator;
-	typedef typename	ft::Reverse_Iterator<iterator>			reverse_iterator;
-	typedef typename	ft::Const_Reverse_Iterator<iterator>	const_reverse_iterator;
+	typedef 			value_type&								reference;
+	typedef				const value_type&						const_reference;
+	typedef 			value_type*								pointer;
+	typedef				const value_type*						const_pointer;
+	typedef 			ft::Iterator<T>							iterator;
+	typedef 			ft::Const_Iterator<T>					const_iterator;
+	typedef 			ft::Reverse_Iterator<iterator>			reverse_iterator;
+	typedef 			ft::Const_Reverse_Iterator<iterator>	const_reverse_iterator;
 	typedef				std::ptrdiff_t							difference_type;
 	typedef				size_t									size_type; 
 

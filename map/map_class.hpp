@@ -111,10 +111,7 @@ Node<T>	*last_right(Node<T> *node)
 	if (node == NULL)
 		return NULL;
 	while (node->right != NULL)
-	{
-		// std::cout << "laaast" << std::endl;
 		node = node->right;
-	}
 	return (node);
 }
 
@@ -129,13 +126,8 @@ Node<T>	*first_left(Node<T> *node)
 template <typename T>
 bool is_leaf(Node<T> *node) 
 {
-	
-	// std::cout << "leaf val = " << node->data.first << std::endl;
 	if (node->left == NULL && node->right == NULL)
-	{
-		// std::cout << "leaf" << std::endl;
 		return true;
-	}
 	return false;
 }
 
@@ -171,10 +163,8 @@ public:
 	typedef				T												mapped_type;
 	typedef				ft::pair<key_type,mapped_type>					value_type;
 	typedef				Compare											key_compare;
-	// class 																value_compare;
-	class value_compare 
+	class 				value_compare 
 	{
-
 	public:
 		Compare comp;
 		value_compare(Compare c) : comp(c) { };
@@ -187,15 +177,15 @@ public:
 		{ return comp(x.first, y.first); }
 	};
 	typedef				Alloc											allocator_type;
-	typedef typename	allocator_type::reference						reference;
-	typedef typename	allocator_type::const_reference					const_reference;
-	typedef typename	allocator_type::pointer							pointer;
-	typedef typename	allocator_type::const_pointer					const_pointer;
+	typedef 			value_type&										reference;
+	typedef				const value_type&								const_reference;
+	typedef 			value_type*										pointer;
+	typedef				const value_type*								const_pointer;
 	typedef				Node<value_type>								node_type;
-	typedef typename	ft::Iterator<value_type, node_type>				iterator;
-	typedef typename	ft::Const_Iterator<value_type, node_type>		const_iterator;
-	typedef typename	ft::Reverse_Iterator<iterator, node_type>		reverse_iterator;
-	typedef typename	ft::Const_Reverse_Iterator<iterator, node_type>	const_reverse_iterator;
+	typedef				ft::Iterator<value_type, node_type>				iterator;
+	typedef				ft::Const_Iterator<value_type, node_type>		const_iterator;
+	typedef				ft::Reverse_Iterator<iterator, node_type>		reverse_iterator;
+	typedef				ft::Const_Reverse_Iterator<iterator, node_type>	const_reverse_iterator;
 	typedef				std::ptrdiff_t									difference_type;
 	typedef				size_t											size_type; 
 
@@ -256,8 +246,6 @@ public:
 	const_iterator upper_bound (const key_type& k) const;
 	pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
 	pair<iterator,iterator> equal_range (const key_type& k);
-	
-	// *** Overload operators *** ----------------------------------- a faire
 
 
 private:
