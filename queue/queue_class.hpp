@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   queue_class.hpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/24 18:08:50 by ejawe             #+#    #+#             */
+/*   Updated: 2021/04/24 18:08:54 by ejawe            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef QUEUE_CLASS_HPP
 # define QUEUE_CLASS_HPP
 
@@ -6,7 +18,6 @@
 
 namespace ft 
 {
-
 
 template <class T, class Container = list<T> >
 class queue 

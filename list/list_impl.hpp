@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_impl.hpp                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/24 18:06:31 by ejawe             #+#    #+#             */
+/*   Updated: 2021/04/24 18:06:32 by ejawe            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIST_IMPL_HPP
 # define LIST_IMPL_HPP
 
@@ -76,12 +88,8 @@ list<T, Alloc>& list<T, Alloc>::operator= (const list& x)
 template <typename T, typename Alloc>
 list<T, Alloc>::~list()
 {
-	size_type i = 0;
-	while(i < _size)
-	{
+	while(_size)
 		pop_back();
-		i++;
-	}
 	delete _node;
 	
 }
@@ -145,7 +153,7 @@ typename list<T, Alloc>::size_type list<T, Alloc>::size() const
 
 template <typename T, typename Alloc>
 typename list<T, Alloc>::size_type list<T, Alloc>::max_size() const
-{ return (std::numeric_limits<difference_type>::max() / (sizeof(Node<T>) / 2 ?: 1)); } 
+{ return (std::numeric_limits<size_type>::max() / (sizeof(node) * 2)); } 
 
 
 //---------------------------------------------------------------------------------------
@@ -213,9 +221,11 @@ void list<T, Alloc>::push_front (const value_type& val)
 template <typename T, typename Alloc>
 void list<T, Alloc>::pop_front()
 {
+	if (!_size)
+		return;
 	Node<T> *tmp = _node->next;
-	
-	_node->next = _node->next->next;
+	_node->next = tmp->next;
+	tmp->next->prev = _node;
 	delete tmp;
 	_size--;
 }
@@ -239,7 +249,6 @@ template <typename T, typename Alloc>
 void list<T, Alloc>::pop_back()
 {
 	Node<T> *tmp = _node->prev;
-
 	_node->prev->prev->next = _node;
 	_node->prev = _node->prev->prev;
 	delete tmp;
@@ -288,28 +297,22 @@ template <typename T, typename Alloc>
 typename list<T, Alloc>::iterator list<T, Alloc>::erase (iterator position)
 {
 	Node<T> *element = position.operator->();
-	Node<T> *next = element->next;
-	Node<T> *prev = element->prev;
+	Node<T> *ret = element->next;
+
+	element->prev->next = element->next;
+	element->next->prev = element->prev;
+
 	delete element;
-	prev->next = next;
-	next->prev = prev;
 	_size--;
-	
-	return (iterator(next));
+	return (ret);
 }
 
 template <typename T, typename Alloc>
 typename list<T, Alloc>::iterator list<T, Alloc>::erase (iterator first, iterator last)
 {
-	
-	iterator it = first;
 	while (first != last)
-	{
-		it = erase(first);
-		first++;
-	}
-	
-	return (it);
+		erase(first++);
+	return (first);
 }
 
 template <typename T, typename Alloc>
@@ -334,7 +337,7 @@ void list<T, Alloc>::resize (size_type n, value_type val)
 	{
 		iterator it = begin();
 		for (size_t i = 0; i < n; i++)
-			++it;
+			it++;
 		erase(it, end());
 	}
 	else if (n > size())
@@ -461,16 +464,14 @@ void list<T, Alloc>::merge (list& x, Compare comp)
 	{
 		if (comp(*startx, *start))
 		{
-			splice(start, x, startx);
-			startx++;
+			splice(start, x, startx++);
 		}
 		else
 			start++;
 	}
 	while (startx != x.end())
 	{
-		splice(end(), x, startx);
-		startx++;
+		splice(end(), x, startx++);
 	}
 }
 

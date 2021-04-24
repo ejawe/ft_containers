@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/24 18:09:04 by ejawe             #+#    #+#             */
+/*   Updated: 2021/04/24 18:09:05 by ejawe            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <iostream>
 #include "stack_class.hpp"
 #include "../vector/vector_class.hpp"
@@ -184,8 +196,8 @@ int		main(void)
 	{std::vector<int> f (3,100);   // three ints with a value of 100
 	std::vector<int> b (2,200);   // two ints with a value of 200
 
-	std::stack<int, std::vector<int>> foo (f);
-	std::stack<int, std::vector<int>> bar (b); 
+	std::stack<int, std::vector<int> > foo (f);
+	std::stack<int, std::vector<int> > bar (b); 
 
 	if (foo==bar) std::cout << "foo and bar are equal\n";
 	if (foo!=bar) std::cout << "foo and bar are not equal\n";
@@ -199,8 +211,8 @@ int		main(void)
 	{ft::vector<int> f (3,100);   // three ints with a value of 100
 	ft::vector<int> b (2,200);   // two ints with a value of 200
 
-	ft::stack<int, ft::vector<int>> foo (f);
-	ft::stack<int, ft::vector<int>> bar (b); 
+	ft::stack<int, ft::vector<int> > foo (f);
+	ft::stack<int, ft::vector<int> > bar (b); 
 
 	if (foo==bar) std::cout << "foo and bar are equal\n";
 	if (foo!=bar) std::cout << "foo and bar are not equal\n";

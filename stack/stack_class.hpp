@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_class.hpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/24 18:09:11 by ejawe             #+#    #+#             */
+/*   Updated: 2021/04/24 18:09:15 by ejawe            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STACK_CLASS_HPP
 # define STACK_CLASS_HPP
 
@@ -6,7 +18,6 @@
 
 namespace ft 
 {
-
 
 template <class T, class Container = vector<T> >
 class stack 

@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Iterator.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/24 18:03:25 by ejawe             #+#    #+#             */
+/*   Updated: 2021/04/24 18:03:27 by ejawe            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
 
-#include "../list_class.hpp"
 
 namespace ft
 {
@@ -37,7 +48,7 @@ namespace ft
         // *** Dereferencing Operators ***
         value_type&             operator*() { return _ptr->val; };  // *a
         pointer                 operator->() { return _ptr; };  // a->m
-        pointer                 operator ->() const { return (_ptr); };	
+        pointer                 operator->() const { return (_ptr); };	
         
     private:
         pointer _ptr;

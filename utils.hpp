@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.hpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/24 18:11:20 by ejawe             #+#    #+#             */
+/*   Updated: 2021/04/24 18:11:40 by ejawe            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef UTILS_HPP
 # define UTILS_HPP
 
 #include <iostream>
-#include <type_traits>
 #include <memory>
 #include <stdexcept>
 
@@ -26,7 +37,5 @@ namespace ft
 	}
 
 };
-
-
 
 #endif

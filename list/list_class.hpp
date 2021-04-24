@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_class.hpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/24 18:05:12 by ejawe             #+#    #+#             */
+/*   Updated: 2021/04/24 18:05:14 by ejawe            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIST_CLASS_HPP
 # define LIST_CLASS_HPP
 
@@ -29,19 +41,19 @@ public:
 
 	// ******** Member type ********
 
-	typedef				T										value_type;
-	typedef				Alloc									allocator_type;
-	typedef 			value_type&								reference;
-	typedef				const value_type&						const_reference;
-	typedef 			value_type*								pointer;
-	typedef				const value_type*						const_pointer;
-	typedef				Node<T>									node;
-	typedef				ft::Iterator<T, node>					iterator;
-	typedef				ft::Const_Iterator<T, node>				const_iterator;
-	typedef				ft::Reverse_Iterator<iterator, node>	reverse_iterator;
+	typedef				T											value_type;
+	typedef				Alloc										allocator_type;
+	typedef 			value_type&									reference;
+	typedef				const value_type&							const_reference;
+	typedef 			value_type*									pointer;
+	typedef				const value_type*							const_pointer;
+	typedef				Node<T>										node;
+	typedef				ft::Iterator<T, node>						iterator;
+	typedef				ft::Const_Iterator<T, node>					const_iterator;
+	typedef				ft::Reverse_Iterator<iterator, node>		reverse_iterator;
 	typedef				ft::Const_Reverse_Iterator<iterator, node>	const_reverse_iterator;
-	typedef				std::ptrdiff_t							difference_type;
-	typedef				size_t									size_type; 
+	typedef				std::ptrdiff_t								difference_type;
+	typedef				size_t										size_type; 
 	
 	// ******** Member function ********
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/24 18:06:39 by ejawe             #+#    #+#             */
+/*   Updated: 2021/04/24 18:06:40 by ejawe            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <list>
 #include "list_class.hpp"
 #include "list_impl.hpp"
@@ -82,31 +94,31 @@ int main ()
 	}
 
 	std::cout << std::endl;
-    // std::cout << "***************************************" << std::endl;
-    // std::cout << "*********** test operator= ************" << std::endl;
-    // std::cout << "***************************************" << std::endl << std::endl;
-	// std::cout << "std :" << std::endl;
-	// {std::list<int> first (3);      // list of 3 zero-initialized ints
-	// std::list<int> second (5);     // list of 5 zero-initialized ints
+    std::cout << "***************************************" << std::endl;
+    std::cout << "*********** test operator= ************" << std::endl;
+    std::cout << "***************************************" << std::endl << std::endl;
+	std::cout << "std :" << std::endl;
+	{std::list<int> first (3);      // list of 3 zero-initialized ints
+	std::list<int> second (5);     // list of 5 zero-initialized ints
 
-	// second = first;
-	// first = std::list<int>();
+	second = first;
+	first = std::list<int>();
 
-	// std::cout << "Size of first: " << int (first.size()) << '\n';
-	// std::cout << "Size of second: " << int (second.size()) << '\n';}
+	std::cout << "Size of first: " << int (first.size()) << '\n';
+	std::cout << "Size of second: " << int (second.size()) << '\n';}
 
-	// std::cout << "-----------------------------" << std::endl;
-	// std::cout << "ft :" << std::endl;
-	// {ft::list<int> first (3);      // list of 3 zero-initialized ints
-	// ft::list<int> second (5);     // list of 5 zero-initialized ints
+	std::cout << "-----------------------------" << std::endl;
+	std::cout << "ft :" << std::endl;
+	{ft::list<int> first (3);      // list of 3 zero-initialized ints
+	ft::list<int> second (5);     // list of 5 zero-initialized ints
 
-	// second = first;
-	// first = ft::list<int>();
+	second = first;
+	first = ft::list<int>();
 
-	// std::cout << "Size of first: " << int (first.size()) << '\n';
-	// std::cout << "Size of second: " << int (second.size()) << '\n';}
+	std::cout << "Size of first: " << int (first.size()) << '\n';
+	std::cout << "Size of second: " << int (second.size()) << '\n';}
 
-	// std::cout << std::endl;
+	std::cout << std::endl;
     std::cout << "***************************************" << std::endl;
     std::cout << "********** test begin & end ***********" << std::endl;
     std::cout << "***************************************" << std::endl << std::endl;
@@ -229,7 +241,7 @@ int main ()
 	for (int i=0; i<100; i++)
         mylist.push_back(i);
 	std::cout << "size: " << mylist.size() << "\n";
-	std::cout << "max_size: " << mylist.max_size() << "\n";}
+	std::cout << "max_size: " << (int)mylist.max_size() << "\n";}
 
 	std::cout << "-----------------------------" << std::endl;
 	std::cout << "ft :" << std::endl;
@@ -237,7 +249,7 @@ int main ()
 	for (int i=0; i<100; i++)
         mylist.push_back(i);
 	std::cout << "size: " << mylist.size() << "\n";
-	std::cout << "max_size: " << mylist.max_size() << "\n";}
+	std::cout << "max_size: " << (int)mylist.max_size() << "\n";}
 
 	std::cout << std::endl;
     std::cout << "***************************************" << std::endl;
@@ -1074,6 +1086,7 @@ int main ()
 	for (ft::list<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';}
+
 	return 0;
 }
 
