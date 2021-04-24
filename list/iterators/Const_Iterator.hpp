@@ -6,7 +6,7 @@
 /*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:03:08 by ejawe             #+#    #+#             */
-/*   Updated: 2021/04/24 18:05:39 by ejawe            ###   ########.fr       */
+/*   Updated: 2021/04/24 20:42:33 by ejawe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,21 @@
 
 namespace ft
 {
-    template <typename T, typename node>
+    template <typename iterator, typename node>
     class Const_Iterator
     {
 
     public:
 
         // ******** Member type ********
-        typedef     T                   value_type;
-        typedef     std::ptrdiff_t      difference_type;
-        typedef     node*               pointer;
+        typedef     typename iterator::value_type                   value_type;
+        typedef     typename iterator::difference_type              difference_type;
+        typedef     typename iterator::pointer			            pointer;
 
 		// ******** Constructors ********
         Const_Iterator() : _ptr(NULL) {}
         Const_Iterator(pointer ptr) { _ptr = ptr; }  // X a;
+        Const_Iterator(iterator const &src) { _ptr = src.get_ptr(); } // X b(a);
         Const_Iterator(Const_Iterator const &src) { *this = src; } // X b(a);
         ~Const_Iterator() {};
         Const_Iterator &operator=(Const_Iterator const &src) // b = a;

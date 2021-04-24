@@ -6,7 +6,7 @@
 /*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:03:25 by ejawe             #+#    #+#             */
-/*   Updated: 2021/04/24 18:03:27 by ejawe            ###   ########.fr       */
+/*   Updated: 2021/04/24 20:42:12 by ejawe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ namespace ft
         // *** Dereferencing Operators ***
         value_type&             operator*() { return _ptr->val; };  // *a
         pointer                 operator->() { return _ptr; };  // a->m
-        pointer                 operator->() const { return (_ptr); };	
+        pointer                 operator->() const { return (_ptr); };
+
+        node                    *get_ptr(void) const { return (_ptr); };
         
     private:
         pointer _ptr;

@@ -6,7 +6,7 @@
 /*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:10:03 by ejawe             #+#    #+#             */
-/*   Updated: 2021/04/24 18:10:05 by ejawe            ###   ########.fr       */
+/*   Updated: 2021/04/24 20:23:50 by ejawe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ namespace ft
         value_type&             operator*() { return *this->_ptr; };  // *a
         value_type&             operator[](difference_type src) { return (*(this->_ptr + src)); }; // a[n]
         value_type*             operator->() { return this->_ptr; };  // a->m
-        value_type*             operator ->() const { return (_ptr); };	
+        value_type*             operator ->() const { return (_ptr); };
+
+        value_type*             get_ptr() const { return (_ptr); };
         
     private:
         value_type *_ptr;

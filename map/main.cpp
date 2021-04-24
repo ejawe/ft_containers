@@ -6,7 +6,7 @@
 /*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:07:51 by ejawe             #+#    #+#             */
-/*   Updated: 2021/04/24 18:07:53 by ejawe            ###   ########.fr       */
+/*   Updated: 2021/04/24 20:58:20 by ejawe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -841,5 +841,6 @@ int main()
 	for (ft::map<int,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';}
 
+  
 	return 0;
 }

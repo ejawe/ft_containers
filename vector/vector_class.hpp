@@ -6,7 +6,7 @@
 /*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:10:46 by ejawe             #+#    #+#             */
-/*   Updated: 2021/04/24 18:10:47 by ejawe            ###   ########.fr       */
+/*   Updated: 2021/04/24 20:57:05 by ejawe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ public:
 	typedef 			value_type*								pointer;
 	typedef				const value_type*						const_pointer;
 	typedef 			ft::Iterator<T>							iterator;
-	typedef 			ft::Const_Iterator<T>					const_iterator;
+	typedef 			ft::Const_Iterator<iterator>			const_iterator;
 	typedef 			ft::Reverse_Iterator<iterator>			reverse_iterator;
 	typedef 			ft::Const_Reverse_Iterator<iterator>	const_reverse_iterator;
 	typedef				std::ptrdiff_t							difference_type;
@@ -52,8 +52,8 @@ public:
 	// ******** Member function ********
 
 	// *** Constructors ***
-	explicit vector (const allocator_type& alloc = allocator_type());
-	explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
+	vector (const allocator_type& alloc = allocator_type());
+	vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
 	template <class InputIterator>
     vector (typename ft::enable_if<!std::numeric_limits<InputIterator>::is_integer, InputIterator>::type first, InputIterator last, const allocator_type& alloc = allocator_type());
 	vector (const vector& x);

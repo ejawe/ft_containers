@@ -6,7 +6,7 @@
 /*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:05:12 by ejawe             #+#    #+#             */
-/*   Updated: 2021/04/24 18:05:14 by ejawe            ###   ########.fr       */
+/*   Updated: 2021/04/24 20:37:12 by ejawe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ public:
 	typedef				const value_type*							const_pointer;
 	typedef				Node<T>										node;
 	typedef				ft::Iterator<T, node>						iterator;
-	typedef				ft::Const_Iterator<T, node>					const_iterator;
+	typedef				ft::Const_Iterator<iterator, node>			const_iterator;
 	typedef				ft::Reverse_Iterator<iterator, node>		reverse_iterator;
 	typedef				ft::Const_Reverse_Iterator<iterator, node>	const_reverse_iterator;
 	typedef				std::ptrdiff_t								difference_type;
