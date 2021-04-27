@@ -6,7 +6,7 @@
 /*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:10:29 by ejawe             #+#    #+#             */
-/*   Updated: 2021/04/24 20:57:24 by ejawe            ###   ########.fr       */
+/*   Updated: 2021/04/27 16:00:02 by ejawe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int main()
     std::cout << "-----------------------------" << std::endl;
     std::cout << "ft :" << std::endl;
 	{
-	// ft::vector<int> first;                                // empty vector of ints
+	ft::vector<int> first;                                // empty vector of ints
 	ft::vector<int> second (4,100);                       // four ints with value 100
 	ft::vector<int> third (second.begin(),second.end());  // iterating through second
 	ft::vector<int> fourth (third);                       // a copy of third
@@ -798,6 +798,93 @@ int main()
 		std::cout << ' ' << *it;
 	std::cout << '\n';}
 
-   
+    std::cout << "***************************************" << std::endl;
+    std::cout << "*********** test Iterators ************" << std::endl;
+    std::cout << "***************************************" << std::endl << std::endl;
+	std::cout << "std :" << std::endl;
+	{std::vector<int> myvector (5);  // 5 default-constructed ints
+
+	int i=0;
+
+	//  Constructor : Reverse_Iterator(Iterator<value_type> const &src)
+	std::vector<int>::reverse_iterator rit = myvector.rbegin();
+	for (; rit!= myvector.rend(); ++rit)
+		*rit = ++i;
+
+	std::vector<int>::reverse_iterator it2 = myvector.rbegin();
+	//  Constructor : Reverse_Iterator(Reverse_Iterator const &src)
+	std::vector<int>::reverse_iterator rit2 = it2;
+	
+
+
+	std::cout << "myvector contains:";
+	//  Constructor : Const_Iterator(iterator const &src)
+	for (std::vector<int>::const_iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+	std::vector<int>::const_iterator it3 = myvector.begin();
+	//  Constructor : Const_Iterator(Const_Iterator const &src)
+	std::vector<int>::const_iterator it = it3;
+	it++;
+
+//  Constructor :
+	std::cout << "*1*"<<'\n';
+	std::vector<int>::const_reverse_iterator rit3 = myvector.rbegin();
+	rit3++;
+	std::cout << "*1*"<<'\n';
+	// for (; rit3!= myvector.rend(); ++rit3)
+	// 	*rit3 = ++i;
+
+	//  Constructor : 
+	std::cout << "*3*"<<'\n';
+	std::vector<int>::const_reverse_iterator rit4 = rit3;
+	std::cout << "*3*"<<'\n';
+
+	}
+
+    std::cout << "-----------------------------" << std::endl;
+    std::cout << "ft :" << std::endl;
+	{ft::vector<int> myvector (5);  // 5 default-constructed ints
+
+	int i=0;
+
+	//  Constructor : Reverse_Iterator(Iterator<value_type> const &src)
+	ft::vector<int>::reverse_iterator rit = myvector.rbegin();
+	for (; rit!= myvector.rend(); ++rit)
+		*rit = ++i;
+
+	ft::vector<int>::reverse_iterator it2 = myvector.rbegin();
+	//  Constructor : Reverse_Iterator(Reverse_Iterator const &src)
+	ft::vector<int>::reverse_iterator rit2 = it2;
+	
+
+
+	std::cout << "myvector contains:";
+	//  Constructor : Const_Iterator(iterator const &src)
+	for (ft::vector<int>::const_iterator it = myvector.begin(); it != myvector.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
+
+	ft::vector<int>::const_iterator it3 = myvector.begin();
+	//  Constructor : Const_Iterator(Const_Iterator const &src)
+	ft::vector<int>::const_iterator it = it3;
+	it++;
+
+
+//  Constructor :
+	std::cout << "*1*"<<'\n';
+	//Constructor : Const_Reverse_Iterator(Reverse_Iterator<iterator> const &src)
+	ft::vector<int>::const_reverse_iterator rit3 = myvector.rbegin();
+	std::cout << "*1*"<<'\n';
+	// for (; rit3!= myvector.rend(); ++rit3)
+	// 	*rit3 = ++i;
+
+	std::cout << "*3*"<<'\n';
+	//Constructor : Const_Reverse_Iterator(Const_Reverse_Iterator const &src)
+	ft::vector<int>::const_reverse_iterator rit4 = rit3;
+	std::cout << "*3*"<<'\n';
+
+	}
 	return 0;
 }

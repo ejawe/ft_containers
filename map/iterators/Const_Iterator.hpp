@@ -6,7 +6,7 @@
 /*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:07:09 by ejawe             #+#    #+#             */
-/*   Updated: 2021/04/24 20:29:01 by ejawe            ###   ########.fr       */
+/*   Updated: 2021/04/27 17:29:32 by ejawe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ namespace ft
         typedef     typename iterator::pointer			            pointer;
 
 		// ******** Constructors ********
-        Const_Iterator() : _ptr(NULL) {}
-        Const_Iterator(node *ptr) { _ptr = ptr; }  // X a;
-        Const_Iterator(iterator const &src) { _ptr = src.get_ptr(); } // X b(a);
-        Const_Iterator(Const_Iterator const &src) { *this = src; } // X b(a);
-        ~Const_Iterator() {};
+        Const_Iterator() : _ptr(NULL) { };
+        Const_Iterator(node *ptr) : _ptr(ptr) { }; // X a;
+        Const_Iterator(Iterator<value_type, node> const &src) { _ptr = src.get_ptr(); }; // X b(a);
+        Const_Iterator(Const_Iterator const &src) { *this = src; }; // X b(a);
+        ~Const_Iterator() { };
         Const_Iterator &operator=(Const_Iterator const &src) // b = a;
-        { _ptr = src._ptr; return *this; }
+        { _ptr = src._ptr; return *this; };
 
         // *** Bool Operators ***
         bool	operator==(Const_Iterator const& src) const { return (_ptr == src._ptr); }; // a == b
@@ -59,8 +59,8 @@ namespace ft
                 }
             }
             return (*this);
-        }
-        Const_Iterator        operator++(int) { Const_Iterator it = *this; ++(*this); return it; } // a++
+        };
+        Const_Iterator        operator++(int) { Const_Iterator it = *this; ++(*this); return it; }; // a++
         Const_Iterator        &operator--() 
         {
             if (_ptr->left != NULL)
@@ -80,12 +80,15 @@ namespace ft
                 }
             }
             return (*this);
-        }
-        Const_Iterator        operator--(int) { Const_Iterator it = *this; --(*this); return it; } // a--
+        };
+        Const_Iterator        operator--(int) { Const_Iterator it = *this; --(*this); return it; }; // a--
 
         // *** Dereferencing Operators ***
         const value_type&		operator*() { return _ptr->data; };  // *a
         const pointer   		operator->() { return &_ptr->data; };  // a->m
+        const pointer   		operator->() const { return &_ptr->data; };  // a->m
+
+        node            *get_ptr() const { return (_ptr); };
 
     private:
         node *_ptr;

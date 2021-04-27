@@ -6,7 +6,7 @@
 /*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:06:39 by ejawe             #+#    #+#             */
-/*   Updated: 2021/04/24 20:58:56 by ejawe            ###   ########.fr       */
+/*   Updated: 2021/04/27 16:41:27 by ejawe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1086,7 +1086,67 @@ int main ()
 	for (ft::list<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
 		std::cout << ' ' << *it;
 	std::cout << '\n';}
+	std::cout << std::endl;
+    std::cout << "***************************************" << std::endl;
+    std::cout << "************* test iterators **********" << std::endl;
+    std::cout << "***************************************" << std::endl << std::endl;
+	std::cout << "std :" << std::endl;
+	{std::list<int> mylist;
+	for (int i=1; i<=5; ++i) mylist.push_back(i);
 
+	std::cout << "mylist backwards:";
+	for (std::list<int>::reverse_iterator rit=mylist.rbegin(); rit!=mylist.rend(); ++rit)
+		std::cout << ' ' << *rit;
+
+	std::list<int>::const_iterator it3 = mylist.begin();
+	//  Constructor : Const_Iterator(Const_Iterator const &src)
+	std::list<int>::const_iterator it = it3;
+	it++;
+
+
+//  Constructor :
+	std::cout << "*1*"<<'\n';
+	//Constructor : Const_Reverse_Iterator(Reverse_Iterator<iterator> const &src)
+	std::list<int>::const_reverse_iterator rit3 = mylist.rbegin();
+	std::cout << "*1*"<<'\n';
+	// for (; rit3!= myvector.rend(); ++rit3)
+	// 	*rit3 = ++i;
+
+	std::cout << "*3*"<<'\n';
+	//Constructor : Const_Reverse_Iterator(Const_Reverse_Iterator const &src)
+	std::list<int>::const_reverse_iterator rit4 = rit3;
+	std::cout << "*3*"<<'\n';
+	}
+
+	std::cout << '\n';
+	std::cout << "-----------------------------" << std::endl;
+	std::cout << "ft :" << std::endl;
+	{ft::list<int> mylist;
+	for (int i=1; i<=5; ++i) mylist.push_back(i);
+
+	std::cout << "mylist backwards:";
+	for (ft::list<int>::reverse_iterator rit=mylist.rbegin(); rit!=mylist.rend(); ++rit)
+		std::cout << ' ' << *rit;
+
+	ft::list<int>::const_iterator it3 = mylist.begin();
+	//  Constructor : Const_Iterator(Const_Iterator const &src)
+	ft::list<int>::const_iterator it = it3;
+	it++;
+
+
+//  Constructor :
+	std::cout << "*1*"<<'\n';
+	//Constructor : Const_Reverse_Iterator(Reverse_Iterator<iterator> const &src)
+	ft::list<int>::const_reverse_iterator rit3 = mylist.rbegin();
+	std::cout << "*1*"<<'\n';
+	// for (; rit3!= myvector.rend(); ++rit3)
+	// 	*rit3 = ++i;
+
+	std::cout << "*3*"<<'\n';
+	//Constructor : Const_Reverse_Iterator(Const_Reverse_Iterator const &src)
+	ft::list<int>::const_reverse_iterator rit4 = rit3;
+	std::cout << "*3*"<<'\n';
+	}
 	return 0;
 }
 

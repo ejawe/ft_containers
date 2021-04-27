@@ -6,7 +6,7 @@
 /*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:08:19 by ejawe             #+#    #+#             */
-/*   Updated: 2021/04/24 18:08:21 by ejawe            ###   ########.fr       */
+/*   Updated: 2021/04/27 17:52:51 by ejawe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,39 +222,58 @@ int		main(void)
 
 	std::cout << std::endl;
     std::cout << "***************************************" << std::endl;
-    std::cout << "********* test swap non member ********" << std::endl;
+    std::cout << "********* test swap non member ********" << std::endl;////////////////////////////////////////
     std::cout << "***************************************" << std::endl << std::endl;
 	std::cout << "std :" << std::endl;
-	{std::list<int> foo (3,100);   // three ints with a value of 100
-	std::list<int> bar (5,200);   // five ints with a value of 200
+	{std::queue<int> foo;
+	std::queue<int> bar;
+
+	for (int i=1; i<10; ++i) foo.push(i);
+
+	for (int i=1; i<5; ++i) bar.push(i);
 
 	std::swap(foo,bar);
 
 	std::cout << "foo contains:";
-	for (std::list<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
-		std::cout << ' ' << *it;
+	while (!foo.empty())
+	{
+		std::cout << ' ' << foo.front();
+		foo.pop();
+	}
 	std::cout << '\n';
-
 	std::cout << "bar contains:";
-	for (std::list<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
-		std::cout << ' ' << *it;
+	while (!bar.empty())
+	{
+		std::cout << ' ' << bar.front();
+		bar.pop();
+	}
 	std::cout << '\n';}
 
 	std::cout << "-----------------------------" << std::endl;
 	std::cout << "ft :" << std::endl;
-	{ft::list<int> foo (3,100);   // three ints with a value of 100
-	ft::list<int> bar (5,200);   // five ints with a value of 200
+	{ft::queue<int> foo;
+	ft::queue<int> bar;
+
+	for (int i=1; i<10; ++i) foo.push(i);
+
+	for (int i=1; i<5; ++i) bar.push(i);
 
 	ft::swap(foo,bar);
 
 	std::cout << "foo contains:";
-	for (ft::list<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
-		std::cout << ' ' << *it;
+	while (!foo.empty())
+	{
+		std::cout << ' ' << foo.front();
+		foo.pop();
+	}
 	std::cout << '\n';
-
 	std::cout << "bar contains:";
-	for (ft::list<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
-		std::cout << ' ' << *it;
+	while (!bar.empty())
+	{
+		std::cout << ' ' << bar.front();
+		bar.pop();
+	}
 	std::cout << '\n';}
+
 	return 0;
 }

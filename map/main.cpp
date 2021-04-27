@@ -6,7 +6,7 @@
 /*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:07:51 by ejawe             #+#    #+#             */
-/*   Updated: 2021/04/24 20:58:20 by ejawe            ###   ########.fr       */
+/*   Updated: 2021/04/27 17:34:29 by ejawe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -841,6 +841,69 @@ int main()
 	for (ft::map<int,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
 		std::cout << it->first << " => " << it->second << '\n';}
 
-  
+	std::cout << "***************************************" << std::endl;
+    std::cout << "************* test iterators **********" << std::endl;
+    std::cout << "***************************************" << std::endl << std::endl;
+	std::cout << "std :" << std::endl;
+	{std::map<int,int> mymap;
+
+	mymap[10] = 100;
+	mymap[5] = 200;
+	mymap[15] = 300;
+	mymap[7] = 400;;
+
+	std::cout << "mymap backwards:";
+	for (std::map<int,int>::reverse_iterator rit=mymap.rbegin(); rit!=mymap.rend(); ++rit)
+		std::cout << ' ' << rit->second;
+
+	std::map<int,int>::const_iterator it3 = mymap.begin();
+	//  Constructor : Const_Iterator(Const_Iterator const &src)
+	std::map<int,int>::const_iterator it = it3;
+	it++;
+
+	std::cout << "*1*"<<'\n';
+	//Constructor : Const_Reverse_Iterator(Reverse_Iterator<iterator> const &src)
+	std::map<int,int>::const_reverse_iterator rit3 = mymap.rbegin();
+	std::cout << "*1*"<<'\n';
+	// for (; rit3!= myvector.rend(); ++rit3)
+	// 	*rit3 = ++i;
+
+	std::cout << "*3*"<<'\n';
+	//Constructor : Const_Reverse_Iterator(Const_Reverse_Iterator const &src)
+	std::map<int,int>::const_reverse_iterator rit4 = rit3;
+	std::cout << "*3*"<<'\n';
+	}
+
+	std::cout << '\n';
+	std::cout << "-----------------------------" << std::endl;
+	std::cout << "ft :" << std::endl;
+	{ft::map<int,int> mymap;
+
+	mymap[10] = 100;
+	mymap[5] = 200;
+	mymap[15] = 300;
+	mymap[7] = 400;;
+
+	std::cout << "mymap backwards:";
+	for (ft::map<int,int>::reverse_iterator rit=mymap.rbegin(); rit!=mymap.rend(); ++rit)
+		std::cout << ' ' << rit->second;
+
+	ft::map<int,int>::const_iterator it3 = mymap.begin();
+	//  Constructor : Const_Iterator(Const_Iterator const &src)
+	ft::map<int,int>::const_iterator it = it3;
+	it++;
+
+	std::cout << "*1*"<<'\n';
+	//Constructor : Const_Reverse_Iterator(Reverse_Iterator<iterator> const &src)
+	ft::map<int,int>::const_reverse_iterator rit3 = mymap.rbegin();
+	std::cout << "*1*"<<'\n';
+	// for (; rit3!= myvector.rend(); ++rit3)
+	// 	*rit3 = ++i;
+
+	std::cout << "*3*"<<'\n';
+	//Constructor : Const_Reverse_Iterator(Const_Reverse_Iterator const &src)
+	ft::map<int,int>::const_reverse_iterator rit4 = rit3;
+	std::cout << "*3*"<<'\n';
+	}
 	return 0;
 }

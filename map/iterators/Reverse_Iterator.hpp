@@ -6,7 +6,7 @@
 /*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:07:29 by ejawe             #+#    #+#             */
-/*   Updated: 2021/04/24 18:07:30 by ejawe            ###   ########.fr       */
+/*   Updated: 2021/04/27 17:29:54 by ejawe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define REVERSE_ITERATOR_HPP
 
 #include "Iterator.hpp"
-
 
 namespace ft
 {
@@ -29,13 +28,13 @@ namespace ft
         typedef     typename iterator::pointer			            pointer;
 
         // ******** Constructors ********
-        Reverse_Iterator() {}
-        Reverse_Iterator(pointer ptr) {_ptr = ptr; }
-        Reverse_Iterator(Iterator<value_type, node> const &src) { _ptr = src.get_ptr(); } ;
-        Reverse_Iterator(Reverse_Iterator const &src) { *this = src; } ;
+        Reverse_Iterator() { };
+        Reverse_Iterator(node *ptr) : _ptr(ptr) { };
+        Reverse_Iterator(Iterator<value_type, node> const &src) { _ptr = src.get_ptr(); };
+        Reverse_Iterator(Reverse_Iterator const &src) { *this = src; };
         ~Reverse_Iterator() { };
         Reverse_Iterator &operator=(Reverse_Iterator const &src)
-        { _ptr = src._ptr; return *this; }
+        { _ptr = src._ptr; return *this; };
 
         // *** Bool Operators ***
         bool	operator==(Reverse_Iterator const& src) const { return (_ptr == src._ptr); };
@@ -61,8 +60,8 @@ namespace ft
                 }
             }
             return (*this);
-        }
-        Reverse_Iterator        operator++(int) { Reverse_Iterator it = *this; ++(*this); return it; }
+        };
+        Reverse_Iterator        operator++(int) { Reverse_Iterator it = *this; ++(*this); return it; };
         Reverse_Iterator        &operator--() 
         {
             if (_ptr->right != NULL)
@@ -82,14 +81,16 @@ namespace ft
                 }
             }
             return (*this);
-        }
-        Reverse_Iterator        operator--(int) { Reverse_Iterator it = *this; --(*this); return it; }
+        };
+        Reverse_Iterator        operator--(int) { Reverse_Iterator it = *this; --(*this); return it; };
 
 
         // *** Dereferencing Operators ***
         value_type&		operator*() { return _ptr->data; };
         pointer		    operator->() { return &_ptr->data; };
         pointer         operator ->() const { return &_ptr->data; };
+
+        node            *get_ptr() const { return (_ptr); };
 
     private:
         node *_ptr;
