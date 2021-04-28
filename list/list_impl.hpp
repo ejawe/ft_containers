@@ -6,7 +6,7 @@
 /*   By: ejawe <ejawe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:06:31 by ejawe             #+#    #+#             */
-/*   Updated: 2021/04/24 18:06:32 by ejawe            ###   ########.fr       */
+/*   Updated: 2021/04/28 12:30:56 by ejawe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,9 +325,6 @@ void list<T, Alloc>::swap (list& x)
 	x._node = tmpnode;
 	_size = x._size;
 	x._size = tmpsize;
-    // ft::swap(_node, x._node);
-    // ft::swap(_alloc, x._alloc);
-    // ft::swap(_size, x._size);
 }
 
 template <typename T, typename Alloc>
