@@ -1,4 +1,4 @@
-# ft_containers wip
+# ft_containers
 
 42 project - Recoder les conteneurs vector, list, map, stack, queue de la STL en C++
 
