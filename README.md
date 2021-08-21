@@ -1,14 +1,13 @@
 # ft_containers wip
 
+42 project - Recoder les conteneurs vector, list, map, stack, queue de la STL en C++
 
-
-https://cpp.developpez.com/faq/cpp/?page=Les-templates#Quelle-difference-y-a-t-il-entre-template-lt-class-gt-et-template-lt-typename-gt
 
 http://www.cplusplus.com/reference/stl/
 
 https://fr.wikipedia.org/wiki/Standard_Template_Library
 
-- VECTOR
+**vector**
 
 - traits enable_if
 https://stackoverflow.com/questions/25284499/how-does-stdenable-if-work
@@ -20,7 +19,7 @@ https://docs.microsoft.com/fr-fr/cpp/cpp/lvalues-and-rvalues-visual-cpp?view=msv
 - Iterator operators
 https://docs.microsoft.com/en-us/cpp/standard-library/iterator-operators?view=msvc-160
 
-- LIST
+**list**
 
 - max_size
 https://stackoverflow.com/questions/27508872/why-does-stdlist-have-a-max-size
@@ -28,7 +27,7 @@ https://stackoverflow.com/questions/27508872/why-does-stdlist-have-a-max-size
 - Strict Weak Ordering
 https://www.boost.org/sgi/stl/StrictWeakOrdering.html
 
-- MAP
+**map**
 
 - tree
 https://www.youtube.com/watch?v=-BYPWouJxFw&list=PLprfEn_dJT0-uexVP05Lu2wlYLIFW32iG&ab_channel=LalithaNatraj
